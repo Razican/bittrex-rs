@@ -15,7 +15,7 @@ impl Client {
             static ref URL: Url = API_URL.join("public/getmarkets").unwrap();
         }
 
-        let mut response = self.inner.get(URL.clone()).send()?;
+        let mut response = self.inner.get(URL.clone())?.send()?;
         let result: ApiResult<Box<[MarketInfo]>> = response.json()?;
         result.into_result()
     }
@@ -27,7 +27,7 @@ impl Client {
             static ref URL: Url = API_URL.join("public/getcurrencies").unwrap();
         }
 
-        let mut response = self.inner.get(URL.clone()).send()?;
+        let mut response = self.inner.get(URL.clone())?.send()?;
         let result: ApiResult<Box<[CurrencyInfo]>> = response.json()?;
         result.into_result()
     }
@@ -42,7 +42,7 @@ impl Client {
         let mut url = URL.clone();
         let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
 
-        let mut response = self.inner.get(url).send()?;
+        let mut response = self.inner.get(url)?.send()?;
         let result: ApiResult<TickerInfo> = response.json()?;
         result.into_result()
     }
@@ -54,7 +54,7 @@ impl Client {
             static ref URL: Url = API_URL.join("public/getmarketsummaries").unwrap();
         }
 
-        let mut response = self.inner.get(URL.clone()).send()?;
+        let mut response = self.inner.get(URL.clone())?.send()?;
         let result: ApiResult<Box<[MarketSummary]>> = response.json()?;
         result.into_result()
     }
@@ -69,7 +69,7 @@ impl Client {
         let mut url = URL.clone();
         let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
 
-        let mut response = self.inner.get(url.clone()).send()?;
+        let mut response = self.inner.get(url.clone())?.send()?;
         let result: ApiResult<Vec<MarketSummary>> = response.json()?;
         result.into_result().and_then(|arr| {
             arr.into_iter().next().ok_or_else(|| {
@@ -99,7 +99,7 @@ impl Client {
             .append_pair("type", order_type.as_str())
             .append_pair("depth", &format!("{}", depth));
 
-        let mut response = self.inner.get(url.clone()).send()?;
+        let mut response = self.inner.get(url.clone())?.send()?;
 
         match order_type {
             OrderBookType::Buy => {
@@ -127,7 +127,7 @@ impl Client {
         let mut url = URL.clone();
         let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
 
-        let mut response = self.inner.get(url.clone()).send()?;
+        let mut response = self.inner.get(url.clone())?.send()?;
         let result: ApiResult<Vec<MarketSummary>> = response.json()?;
         result.into_result().and_then(|arr| {
             arr.into_iter().next().ok_or_else(|| {
