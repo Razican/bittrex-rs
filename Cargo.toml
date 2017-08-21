@@ -1,7 +1,24 @@
 [package]
 name = "bittrex"
 version = "0.1.0"
-authors = ["Razican <razican@protonmail.ch>"]
+authors = [
+  "Razican <razican@protonmail.ch>"
+]
+license = "MIT/Apache-2.0"
+repository = "https://github.com/Razican/bittrex-rs"
+homepage = "https://bittrex.com/"
+documentation = "https://docs.rs/bittrex/"
+description = """\
+Bittrex API bindings for Rust.
+"""
+readme = "README.md"
+keywords = ["bittrex", "bitcoin", "API", "exchange"]
+
+[badges]
+travis-ci = { repository = "Razican/bittrex-rs", branch = "master" }
+codecov = { repository = "OpenStratos/server-rs", branch = "master", service = "github" }
+is-it-maintained-issue-resolution = { repository = "OpenStratos/server-rs" }
+is-it-maintained-open-issues = { repository = "OpenStratos/server-rs" }
 
 [dependencies]
 lazy_static = "0.2.8"

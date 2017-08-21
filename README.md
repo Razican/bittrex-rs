@@ -1,6 +1,7 @@
 # Bittrex API for Rust #
 [![Build Status](https://travis-ci.org/Razican/bittrex-rs.svg?branch=develop)](https://travis-ci.org/Razican/bittrex-rs)
 [![codecov](https://codecov.io/gh/Razican/bittrex-rs/branch/develop/graph/badge.svg)](https://travis-ci.org/Razican/bittrex-rs)
+[![Crates.io](https://meritbadge.herokuapp.com/bittrex)](https://crates.io/crates/bittrex)
 
 This crate implements a client to connect with the Bittrex API. It can be used by adding the crate
 to Cargo.toml and this to the main.rs/lib.rs:
