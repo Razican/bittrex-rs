@@ -4,7 +4,7 @@
 [![Crates.io](https://meritbadge.herokuapp.com/bittrex)](https://crates.io/crates/bittrex)
 
 This crate implements a client to connect with the Bittrex API. It can be used by adding the crate
-to Cargo.toml and this to the main.rs/lib.rs:
+to Cargo.toml and this to the `main.rs` or `lib.rs` file:
 
 ```rust
 extern crate bittrex;

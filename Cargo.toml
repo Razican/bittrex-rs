@@ -33,3 +33,6 @@ hex = "0.2.0"
 [dependencies.chrono]
 version = "0.4.0"
 features = ["serde"]
+
+[dev-dependencies]
+dotenv = "0.10.1"
