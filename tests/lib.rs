@@ -1,8 +1,12 @@
 extern crate bittrex;
 extern crate chrono;
+extern crate dotenv;
+
+use std::env;
 
 use bittrex::Client;
 use chrono::*;
+use dotenv::dotenv;
 
 /// Tests getting all the markets.
 #[test]
@@ -117,4 +121,19 @@ fn it_get_order_book_panic() {
     client
         .get_order_book("BTC-LTC", OrderBookType::Both, 100)
         .unwrap();
+}
+
+/// Test get balances from account.
+#[test]
+#[ignore]
+fn it_get_balances() {
+    dotenv().ok().unwrap();
+
+    let api_key = env::var("API_KEY").unwrap();
+    let api_secret = env::var("API_SECRET").unwrap();
+
+    let mut client = Client::new().unwrap();
+    client.login(api_key, api_secret);
+
+    client.get_balances().unwrap();
 }

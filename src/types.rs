@@ -269,6 +269,7 @@ impl MarketSummary {
         self.open_sell_orders
     }
 
+    /// Gets the price of the previous day.
     pub fn prev_day(&self) -> f32 {
         self.prev_day
     }
@@ -334,5 +335,68 @@ impl Order {
     /// Gets the rate/price of the order.
     pub fn rate(&self) -> f32 {
         self.rate
+    }
+}
+
+/// Structure representing a currency balance information.
+#[derive(Debug, Clone, Deserialize)]
+#[serde(rename_all = "PascalCase")]
+pub struct BalanceInfo {
+    /// Currency code.
+    currency: String,
+    /// Balance for the currency.
+    balance: f32,
+    /// Available balance for the currency.
+    available: f32,
+    /// Pending balance for the currency.
+    pending: f32,
+    /// Address of the currency for deposits.
+    crypto_address: Option<String>,
+    /// Wether a withdrawal has been requested.
+    requested: Option<bool>,
+    /// UUID of the currency.
+    uuid: Option<String>,
+}
+
+impl BalanceInfo {
+    /// Gets the currency code.
+    pub fn currency(&self) -> &str {
+        &self.currency
+    }
+
+    /// Gets the balance for the currency.
+    pub fn balance(&self) -> f32 {
+        self.balance
+    }
+
+    /// Gets the available balance for the currency.
+    pub fn available(&self) -> f32 {
+        self.available
+    }
+
+    /// Gets the pending balance for the currency.
+    pub fn pending(&self) -> f32 {
+        self.pending
+    }
+
+    /// Gets the address of the currency for deposits.
+    pub fn crypto_address(&self) -> Option<&str> {
+        match self.crypto_address {
+            Some(ref addr) => Some(&addr),
+            None => None,
+        }
+    }
+
+    /// Gets wether a withdrawal has been requested.
+    pub fn requested(&self) -> bool {
+        self.requested == Some(true)
+    }
+
+    /// Gets the UUID of the currency.
+    pub fn uuid(&self) -> Option<&str> {
+        match self.uuid {
+            Some(ref uuid) => Some(&uuid),
+            None => None,
+        }
     }
 }
