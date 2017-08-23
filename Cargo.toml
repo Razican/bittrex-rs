@@ -1,6 +1,6 @@
 [package]
 name = "bittrex"
-version = "0.1.0"
+version = "0.1.1"
 authors = [
   "Razican <razican@protonmail.ch>"
 ]
@@ -16,9 +16,9 @@ keywords = ["bittrex", "bitcoin", "API", "exchange"]
 
 [badges]
 travis-ci = { repository = "Razican/bittrex-rs", branch = "master" }
-codecov = { repository = "OpenStratos/server-rs", branch = "master", service = "github" }
-is-it-maintained-issue-resolution = { repository = "OpenStratos/server-rs" }
-is-it-maintained-open-issues = { repository = "OpenStratos/server-rs" }
+codecov = { repository = "Razican/bittrex-rs", branch = "master", service = "github" }
+is-it-maintained-issue-resolution = { repository = "Razican/bittrex-rs" }
+is-it-maintained-open-issues = { repository = "Razican/bittrex-rs" }
 
 [dependencies]
 lazy_static = "0.2.8"
