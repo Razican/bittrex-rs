@@ -4,8 +4,11 @@
 
 error_chain!{
     foreign_links {
+        Fmt(::std::fmt::Error) #[doc = "Format error"];
         ReqwestUrl(::reqwest::UrlError) #[doc = "Reqwest URL parsing error"];
         Reqwest(::reqwest::Error) #[doc = "Reqwest error"];
+        // HmacInvalidKeyLength(::hmac::crypto_mac::InvalidKeyLength)
+        //     #[doc = "Invalid HMAC key length"];
     }
 
     errors {

@@ -54,7 +54,7 @@ impl Client {
     /// Creates a new client with default configuration.
     pub fn new() -> Result<Client> {
         Ok(Client {
-            inner: reqwest::Client::new()?,
+            inner: reqwest::Client::new(),
             api_key: None,
             api_secret: None,
         })
@@ -83,26 +83,32 @@ impl Client {
     /// Gets the headers for the given URL.
     ///
     /// **Note: it will panic if not logged in.**
-    fn get_headers(&self, url: &Url) -> Headers {
+    fn get_headers(&self, url: &Url) -> Result<Headers> {
         let mut headers = Headers::new();
         let hash = self.hash_uri(url);
-        headers.set_raw("apisign", hash);
-        headers
+        headers.set_raw("apisign", hash?);
+        Ok(headers)
     }
 
     /// Hash the given URI with the logged in API secret.
     ///
     /// **Note: it will panic if not logged in.**
-    fn hash_uri(&self, url: &Url) -> String {
+    fn hash_uri(&self, url: &Url) -> Result<String> {
         use hmac::{Hmac, Mac};
         use sha2::Sha512;
         use hex::ToHex;
 
-        let api_secret = self.api_secret.as_ref().unwrap();
-        let mut hmac = Hmac::<Sha512>::new(api_secret.as_bytes());
+        let api_secret = self.api_secret.as_ref().expect(
+            "the client was not logged in",
+        );
+        let mut hmac = Hmac::<Sha512>::new(api_secret.as_bytes()).map_err(|_| {
+            Error::from("invalid key length")
+        })?;
         hmac.input(url.as_str().as_ref());
 
-        hmac.result().code().to_hex()
+        let mut res = String::new();
+        hmac.result().code().as_slice().write_hex(&mut res)?;
+        Ok(res)
     }
 }
 
