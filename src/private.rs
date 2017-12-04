@@ -23,8 +23,8 @@ impl Client {
         let mut url = URL.clone();
         self.append_login(&mut url);
 
-        let headers = self.get_headers(&url);
-        let mut response = self.inner.get(url)?.headers(headers).send()?;
+        let headers = self.get_headers(&url)?;
+        let mut response = self.inner.get(url).headers(headers).send()?;
         let result: ApiResult<Box<[BalanceInfo]>> = response.json()?;
         result.into_result()
     }
