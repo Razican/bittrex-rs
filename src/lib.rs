@@ -1,12 +1,12 @@
 //! Bittrex API.
 
-// #![forbid(missing_docs, warnings)]
-#![deny(deprecated, improper_ctypes, non_shorthand_field_patterns, overflowing_literals,
-    plugin_as_library, private_no_mangle_fns, private_no_mangle_statics, stable_features,
-    unconditional_recursion, unknown_lints, unused, unused_allocation, unused_attributes,
-    unused_comparisons, unused_features, unused_parens, while_true)]
-#![warn(missing_docs, trivial_casts, trivial_numeric_casts, unused, unused_extern_crates,
-    unused_import_braces, unused_qualifications, unused_results, variant_size_differences)]
+#![cfg_attr(feature = "cargo-clippy", deny(clippy))]
+#![forbid(anonymous_parameters)]
+#![cfg_attr(feature = "cargo-clippy", warn(clippy_pedantic))]
+#![deny(variant_size_differences, unused_results, unused_qualifications, unused_import_braces,
+        unsafe_code, trivial_numeric_casts, trivial_casts, missing_docs,
+        missing_debug_implementations, missing_copy_implementations, box_pointers,
+        unused_extern_crates)]
 
 #[macro_use]
 extern crate lazy_static;

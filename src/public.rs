@@ -9,26 +9,26 @@ use types::*;
 /// Public API methods.
 impl Client {
     /// Used to get the open and available trading markets at Bittrex along with other meta data.
-    pub fn get_markets(&self) -> Result<Box<[MarketInfo]>> {
+    pub fn get_markets(&self) -> Result<Vec<MarketInfo>> {
         lazy_static! {
             /// URL for the `get_markets` endpoint.
             static ref URL: Url = API_URL.join("public/getmarkets").unwrap();
         }
 
         let mut response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Box<[MarketInfo]>> = response.json()?;
+        let result: ApiResult<Vec<MarketInfo>> = response.json()?;
         result.into_result()
     }
 
     /// Used to get all supported currencies at Bittrex along with other meta data.
-    pub fn get_currencies(&self) -> Result<Box<[CurrencyInfo]>> {
+    pub fn get_currencies(&self) -> Result<Vec<CurrencyInfo>> {
         lazy_static! {
             /// URL for the `get_currencies` endpoint.
             static ref URL: Url = API_URL.join("public/getcurrencies").unwrap();
         }
 
         let mut response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Box<[CurrencyInfo]>> = response.json()?;
+        let result: ApiResult<Vec<CurrencyInfo>> = response.json()?;
         result.into_result()
     }
 
@@ -48,14 +48,14 @@ impl Client {
     }
 
     /// Used to get the last 24 hour summary of all active exchanges.
-    pub fn get_market_summaries(&self) -> Result<Box<[MarketSummary]>> {
+    pub fn get_market_summaries(&self) -> Result<Vec<MarketSummary>> {
         lazy_static! {
             /// URL for the `get_currencies` endpoint.
             static ref URL: Url = API_URL.join("public/getmarketsummaries").unwrap();
         }
 
         let mut response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Box<[MarketSummary]>> = response.json()?;
+        let result: ApiResult<Vec<MarketSummary>> = response.json()?;
         result.into_result()
     }
 
