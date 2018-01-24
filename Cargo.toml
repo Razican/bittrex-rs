@@ -23,11 +23,11 @@ is-it-maintained-open-issues = { repository = "Razican/bittrex-rs" }
 [dependencies]
 lazy_static = "1.0.0"
 error-chain = "0.11.0"
-reqwest = "0.8.1"
+reqwest = "0.8.4"
 sha2 = "0.7.0"
 hmac = "0.5.0"
-serde = "1.0.11"
-serde_derive = "1.0.11"
+serde = "1.0.27"
+serde_derive = "1.0.27"
 hex = "0.3.1"
 
 [dependencies.chrono]
