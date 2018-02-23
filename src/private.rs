@@ -3,9 +3,9 @@
 //! **Note: All this methods will panic if the client is not logged in.**
 
 use reqwest::Url;
+use failure::Error;
 
-use {Client, API_URL, ApiResult};
-use error::*;
+use {ApiResult, Client, API_URL};
 use types::*;
 
 /// Private API methods.
@@ -15,7 +15,7 @@ impl Client {
     /// Gets the balances of the Bittrex account.
     ///
     /// **Note: it will panic if not logged in.**
-    pub fn get_balances(&self) -> Result<Vec<BalanceInfo>> {
+    pub fn get_balances(&self) -> Result<Vec<BalanceInfo>, Error> {
         lazy_static! {
             /// URL for the `get_balances` endpoint.
             static ref URL: Url = API_URL.join("account/getbalances").unwrap();
