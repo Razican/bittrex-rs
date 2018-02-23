@@ -22,14 +22,19 @@ rust:
   - nightly
   - beta
   - stable
-  - 1.18.0
+  - 1.24.0
+  - 1.23.0
+  - 1.22.0
+  - 1.21.0
+  - 1.20.0
+  - 1.19.0
 
 # Install clippy, rustfmt and cargo-deb, and set up PATH.
 # Using rustfmt git for now, released version has bugs.
 before_script:
   - |
       if [[ "$TRAVIS_OS_NAME" == "linux" && "$TRAVIS_RUST_VERSION" == "stable" ]]; then
-        ( cargo install rustfmt --force || true );
+        ( rustup component add rustfmt-preview || true );
       fi
   - |
       if [[ "$TRAVIS_RUST_VERSION" == "nightly" ]]; then
