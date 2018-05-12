@@ -20,15 +20,15 @@ extern crate serde;
 extern crate serde_derive;
 extern crate sha2;
 
-mod public;
 mod private;
+mod public;
 pub mod types;
 
+use chrono::Utc;
+use failure::Error;
 use reqwest::Url;
 use reqwest::header::Headers;
 use serde::Deserialize;
-use chrono::Utc;
-use failure::Error;
 
 pub use public::OrderBookType;
 
@@ -92,14 +92,14 @@ impl Client {
     ///
     /// **Note: it will panic if not logged in.**
     fn hash_uri(&self, url: &Url) -> Result<String, Error> {
+        use hex::ToHex;
         use hmac::{Hmac, Mac};
         use sha2::Sha512;
-        use hex::ToHex;
 
         let api_secret = self.api_secret
             .as_ref()
             .expect("the client was not logged in");
-        let mut hmac = Hmac::<Sha512>::new(api_secret.as_bytes())
+        let mut hmac = Hmac::<Sha512>::new_varkey(api_secret.as_bytes())
             .map_err(|_| format_err!("invalid key length"))?;
         hmac.input(url.as_str().as_ref());
 

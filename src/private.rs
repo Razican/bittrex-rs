@@ -2,11 +2,11 @@
 //!
 //! **Note: All this methods will panic if the client is not logged in.**
 
-use reqwest::Url;
 use failure::Error;
+use reqwest::Url;
 
-use {ApiResult, Client, API_URL};
 use types::*;
+use {ApiResult, Client, API_URL};
 
 /// Private API methods.
 ///

@@ -383,9 +383,10 @@ impl BalanceInfo {
 
     /// Gets the address of the currency for deposits.
     pub fn crypto_address(&self) -> Option<&str> {
-        match self.crypto_address {
-            Some(ref addr) => Some(&addr),
-            None => None,
+        if let Some(s) = &self.crypto_address {
+            Some(s.as_str())
+        } else {
+            None
         }
     }
 
@@ -396,9 +397,10 @@ impl BalanceInfo {
 
     /// Gets the UUID of the currency.
     pub fn uuid(&self) -> Option<&str> {
-        match self.uuid {
-            Some(ref uuid) => Some(&uuid),
-            None => None,
+        if let Some(s) = &self.uuid {
+            Some(s.as_str())
+        } else {
+            None
         }
     }
 }

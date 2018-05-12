@@ -1,10 +1,10 @@
 //! Public API methods.
 
-use reqwest::Url;
 use failure::Error;
+use reqwest::Url;
 
-use {ApiResult, Client, API_URL};
 use types::*;
+use {ApiResult, Client, API_URL};
 
 /// Public API methods.
 impl Client {
@@ -151,7 +151,7 @@ pub enum OrderBookType {
 impl OrderBookType {
     /// Gets a string representation of the order book type.
     fn as_str(&self) -> &str {
-        match *self {
+        match self {
             OrderBookType::Buy => "buy",
             OrderBookType::Sell => "sell",
             OrderBookType::Both => "both",
