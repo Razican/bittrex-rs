@@ -297,12 +297,12 @@ pub struct OrderBook {
 
 impl OrderBook {
     /// Creates a new order book.
-    pub(crate) fn new<B, S>(buy: B, sell: S) -> OrderBook
+    pub(crate) fn new<B, S>(buy: B, sell: S) -> Self
     where
         B: Into<Box<[Order]>>,
         S: Into<Box<[Order]>>,
     {
-        OrderBook {
+        Self {
             buy: buy.into(),
             sell: sell.into(),
         }
