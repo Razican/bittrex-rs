@@ -34,7 +34,6 @@ fn it_date_time_parsing() {
             assert_eq!(creation.minute(), 0);
             assert_eq!(creation.second(), 0);
             assert_eq!(creation.nanosecond(), 0);
-
         } else if market.market_currency() == "BTC-BYC" {
             // "2014-11-03T19:02:45.96"
             let creation = market.created();
@@ -49,7 +48,6 @@ fn it_date_time_parsing() {
             assert_eq!(creation.nanosecond(), 960000000);
         }
     }
-
 }
 
 /// Tests getting all currencies.

@@ -152,7 +152,7 @@ impl CurrencyInfo {
 }
 
 /// Ticker information structure.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct TickerInfo {
     /// Current bidding/buying price for the market.
@@ -287,6 +287,7 @@ impl MarketSummary {
 
 /// Structure representing an order book.
 #[derive(Debug, Clone, Deserialize)]
+
 pub struct OrderBook {
     /// List of buying orders.
     buy: Box<[Order]>,
@@ -295,6 +296,7 @@ pub struct OrderBook {
 }
 
 impl OrderBook {
+    /// Creates a new order book.
     pub(crate) fn new<B, S>(buy: B, sell: S) -> OrderBook
     where
         B: Into<Box<[Order]>>,
@@ -317,7 +319,7 @@ impl OrderBook {
 }
 
 /// Structure representing an order.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Deserialize)]
 #[serde(rename_all = "PascalCase")]
 pub struct Order {
     /// Quantity being ordered.
@@ -381,9 +383,10 @@ impl BalanceInfo {
 
     /// Gets the address of the currency for deposits.
     pub fn crypto_address(&self) -> Option<&str> {
-        match self.crypto_address {
-            Some(ref addr) => Some(&addr),
-            None => None,
+        if let Some(s) = &self.crypto_address {
+            Some(s.as_str())
+        } else {
+            None
         }
     }
 
@@ -394,9 +397,10 @@ impl BalanceInfo {
 
     /// Gets the UUID of the currency.
     pub fn uuid(&self) -> Option<&str> {
-        match self.uuid {
-            Some(ref uuid) => Some(&uuid),
-            None => None,
+        if let Some(s) = &self.uuid {
+            Some(s.as_str())
+        } else {
+            None
         }
     }
 }
