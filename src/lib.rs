@@ -7,6 +7,9 @@
         unsafe_code, trivial_numeric_casts, trivial_casts, missing_docs,
         missing_debug_implementations, missing_copy_implementations, unused_extern_crates)]
 
+// Allowing these for now.
+#![cfg_attr(feature = "cargo-clippy", allow(similar_names))]
+
 extern crate chrono;
 #[macro_use]
 extern crate failure;
@@ -48,16 +51,17 @@ pub struct Client {
     api_secret: Option<String>,
 }
 
-impl Client {
-    /// Creates a new client with default configuration.
-    pub fn new() -> Result<Client, Error> {
-        Ok(Client {
+impl Default for Client {
+    fn default() -> Self {
+        Self {
             inner: reqwest::Client::new(),
             api_key: None,
             api_secret: None,
-        })
+        }
     }
+}
 
+impl Client {
     /// Logs the client in for future private method access.
     ///
     /// Note: This will not perform any request to Bittrex, it will only store the API key and the
