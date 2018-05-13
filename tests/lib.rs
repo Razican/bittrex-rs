@@ -11,14 +11,14 @@ use dotenv::dotenv;
 /// Tests getting all the markets.
 #[test]
 fn it_get_markets() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client.get_markets().unwrap();
 }
 
 /// Tests that the date/time parsing from the API is done properly.
 #[test]
 fn it_date_time_parsing() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     let markets = client.get_markets().unwrap();
 
     for market in markets.iter() {
@@ -53,14 +53,14 @@ fn it_date_time_parsing() {
 /// Tests getting all currencies.
 #[test]
 fn it_get_currencies() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client.get_currencies().unwrap();
 }
 
 /// Tests getting the ticker information for 3 valid and 1 invalid markets.
 #[test]
 fn it_get_ticker() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client.get_ticker("BTC-LTC").unwrap();
     client.get_ticker("BTC-ETH").unwrap();
     client.get_ticker("BTC-ZEC").unwrap();
@@ -71,14 +71,14 @@ fn it_get_ticker() {
 /// Tests getting all the market summaries.
 #[test]
 fn it_get_market_summaries() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client.get_market_summaries().unwrap();
 }
 
 /// Tests 3 valid and 1 invalid market summary for an expected response.
 #[test]
 fn it_get_market_summary() {
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client.get_market_summary("BTC-LTC").unwrap();
     client.get_market_summary("BTC-ETH").unwrap();
     client.get_market_summary("BTC-ZEC").unwrap();
@@ -91,7 +91,7 @@ fn it_get_market_summary() {
 fn it_get_order_book() {
     use bittrex::OrderBookType;
 
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client
         .get_order_book("BTC-LTC", OrderBookType::Buy, 20)
         .unwrap();
@@ -115,7 +115,7 @@ fn it_get_order_book() {
 fn it_get_order_book_panic() {
     use bittrex::OrderBookType;
 
-    let client = Client::new().unwrap();
+    let client = Client::default();
     client
         .get_order_book("BTC-LTC", OrderBookType::Both, 100)
         .unwrap();
@@ -130,7 +130,7 @@ fn it_get_balances() {
     let api_key = env::var("API_KEY").unwrap();
     let api_secret = env::var("API_SECRET").unwrap();
 
-    let mut client = Client::new().unwrap();
+    let mut client = Client::default();
     client.login(api_key, api_secret);
 
     client.get_balances().unwrap();
