@@ -1,0 +1,243 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `MarketSummary` struct in crate `bittrex`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, MarketSummary">
+
+    <title>bittrex::types::MarketSummary - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../../dark.css">
+    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
+    <script src="../../storage.js"></script>
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct MarketSummary</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.market_name">market_name</a><a href="#structfield.high">high</a><a href="#structfield.low">low</a><a href="#structfield.last">last</a><a href="#structfield.bid">bid</a><a href="#structfield.ask">ask</a><a href="#structfield.volume">volume</a><a href="#structfield.base_volume">base_volume</a><a href="#structfield.time_stamp">time_stamp</a><a href="#structfield.open_buy_orders">open_buy_orders</a><a href="#structfield.open_sell_orders">open_sell_orders</a><a href="#structfield.prev_day">prev_day</a><a href="#structfield.created">created</a><a href="#structfield.display_market_name">display_market_name</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.market_name">market_name</a><a href="#method.high">high</a><a href="#method.low">low</a><a href="#method.last">last</a><a href="#method.bid">bid</a><a href="#method.ask">ask</a><a href="#method.volume">volume</a><a href="#method.base_volume">base_volume</a><a href="#method.time_stamp">time_stamp</a><a href="#method.open_buy_orders">open_buy_orders</a><a href="#method.open_sell_orders">open_sell_orders</a><a href="#method.prev_day">prev_day</a><a href="#method.created">created</a><a href="#method.display_market_name">display_market_name</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Clone">Clone</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='../index.html'>bittrex</a>::<wbr><a href='index.html'>types</a></p><script>window.sidebarCurrent = {name: 'MarketSummary', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../../theme.js"></script>
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='../index.html'>bittrex</a>::<wbr><a href='index.html'>types</a>::<wbr><a class="struct" href=''>MarketSummary</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../../src/bittrex/types.rs.html#186-214' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct MarketSummary {
+    market_name: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>,
+    high: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    low: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    last: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    bid: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    ask: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    volume: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    base_volume: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;,
+    time_stamp: <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a>,
+    open_buy_orders: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;,
+    open_sell_orders: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;,
+    prev_day: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>,
+    created: <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a>,
+    display_market_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+}</pre></div><div class='docblock'><p>Market summary structure</p>
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.market_name" class="structfield small-section-header">
+                           <a href="#structfield.market_name" class="anchor field"></a>
+                           <span id="market_name.v" class='invisible'>
+                           <code>market_name: <a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a></code>
+                           </span></span><div class='docblock'><p>Name of the market.</p>
+</div><span id="structfield.high" class="structfield small-section-header">
+                           <a href="#structfield.high" class="anchor field"></a>
+                           <span id="high.v" class='invisible'>
+                           <code>high: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Highest transaction value in the last 24 hours for the market.</p>
+</div><span id="structfield.low" class="structfield small-section-header">
+                           <a href="#structfield.low" class="anchor field"></a>
+                           <span id="low.v" class='invisible'>
+                           <code>low: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Lowest transaction value in the last 24 hours for the market.</p>
+</div><span id="structfield.last" class="structfield small-section-header">
+                           <a href="#structfield.last" class="anchor field"></a>
+                           <span id="last.v" class='invisible'>
+                           <code>last: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Last transaction price.</p>
+</div><span id="structfield.bid" class="structfield small-section-header">
+                           <a href="#structfield.bid" class="anchor field"></a>
+                           <span id="bid.v" class='invisible'>
+                           <code>bid: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Current bidding/buying price.</p>
+</div><span id="structfield.ask" class="structfield small-section-header">
+                           <a href="#structfield.ask" class="anchor field"></a>
+                           <span id="ask.v" class='invisible'>
+                           <code>ask: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Current asking/selling price.</p>
+</div><span id="structfield.volume" class="structfield small-section-header">
+                           <a href="#structfield.volume" class="anchor field"></a>
+                           <span id="volume.v" class='invisible'>
+                           <code>volume: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Volume of the market.</p>
+</div><span id="structfield.base_volume" class="structfield small-section-header">
+                           <a href="#structfield.base_volume" class="anchor field"></a>
+                           <span id="base_volume.v" class='invisible'>
+                           <code>base_volume: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Base volume of the market.</p>
+</div><span id="structfield.time_stamp" class="structfield small-section-header">
+                           <a href="#structfield.time_stamp" class="anchor field"></a>
+                           <span id="time_stamp.v" class='invisible'>
+                           <code>time_stamp: <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a></code>
+                           </span></span><div class='docblock'><p>Timestamp of the information.</p>
+</div><span id="structfield.open_buy_orders" class="structfield small-section-header">
+                           <a href="#structfield.open_buy_orders" class="anchor field"></a>
+                           <span id="open_buy_orders.v" class='invisible'>
+                           <code>open_buy_orders: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Number of open buying orders.</p>
+</div><span id="structfield.open_sell_orders" class="structfield small-section-header">
+                           <a href="#structfield.open_sell_orders" class="anchor field"></a>
+                           <span id="open_sell_orders.v" class='invisible'>
+                           <code>open_sell_orders: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Number of open selling orders.</p>
+</div><span id="structfield.prev_day" class="structfield small-section-header">
+                           <a href="#structfield.prev_day" class="anchor field"></a>
+                           <span id="prev_day.v" class='invisible'>
+                           <code>prev_day: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code>
+                           </span></span><span id="structfield.created" class="structfield small-section-header">
+                           <a href="#structfield.created" class="anchor field"></a>
+                           <span id="created.v" class='invisible'>
+                           <code>created: <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a></code>
+                           </span></span><div class='docblock'><p>Market creation time.</p>
+</div><span id="structfield.display_market_name" class="structfield small-section-header">
+                           <a href="#structfield.display_market_name" class="anchor field"></a>
+                           <span id="display_market_name.v" class='invisible'>
+                           <code>display_market_name: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>Name to display for the market.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#216-286' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.market_name' class="method"><span id='market_name.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.market_name' class='fnname'>market_name</a>(&amp;self) -&gt; &amp;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#218-220' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the name of the market.</p>
+</div><h4 id='method.high' class="method"><span id='high.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.high' class='fnname'>high</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#223-225' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the highest transaction value in the last 24 hours for the market.</p>
+</div><h4 id='method.low' class="method"><span id='low.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.low' class='fnname'>low</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#228-230' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the lowest transaction value in the last 24 hours for the market.</p>
+</div><h4 id='method.last' class="method"><span id='last.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.last' class='fnname'>last</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#233-235' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the last transaction price.</p>
+</div><h4 id='method.bid' class="method"><span id='bid.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.bid' class='fnname'>bid</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#238-240' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the current bidding/buying price.</p>
+</div><h4 id='method.ask' class="method"><span id='ask.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.ask' class='fnname'>ask</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#243-245' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the current asking/selling price.</p>
+</div><h4 id='method.volume' class="method"><span id='volume.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.volume' class='fnname'>volume</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#248-250' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the volume of the market.</p>
+</div><h4 id='method.base_volume' class="method"><span id='base_volume.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.base_volume' class='fnname'>base_volume</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#253-255' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the base volume of the market.</p>
+</div><h4 id='method.time_stamp' class="method"><span id='time_stamp.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.time_stamp' class='fnname'>time_stamp</a>(&amp;self) -&gt; <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#258-260' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the timestamp of the information.</p>
+</div><h4 id='method.open_buy_orders' class="method"><span id='open_buy_orders.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.open_buy_orders' class='fnname'>open_buy_orders</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#263-265' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the number of open buying orders.</p>
+</div><h4 id='method.open_sell_orders' class="method"><span id='open_sell_orders.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.open_sell_orders' class='fnname'>open_sell_orders</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u32.html">u32</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#268-270' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the number of open selling orders.</p>
+</div><h4 id='method.prev_day' class="method"><span id='prev_day.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.prev_day' class='fnname'>prev_day</a>(&amp;self) -&gt; <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.f32.html">f32</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#273-275' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the price of the previous day.</p>
+</div><h4 id='method.created' class="method"><span id='created.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.created' class='fnname'>created</a>(&amp;self) -&gt; <a class="struct" href="https://docs.rs/chrono/0.4.0/chrono/naive/datetime/struct.NaiveDateTime.html" title="struct chrono::naive::datetime::NaiveDateTime">NaiveDateTime</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#278-280' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the market creation time.</p>
+</div><h4 id='method.display_market_name' class="method"><span id='display_market_name.v-1' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.display_market_name' class='fnname'>display_market_name</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;&amp;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#283-285' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the name to display for the market.</p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+            <div id='implementations-list'>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code><a href='#impl-Debug' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#184' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#184' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Clone' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html" title="trait core::clone::Clone">Clone</a> for <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code><a href='#impl-Clone' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#184' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.clone' class="method"><span id='clone.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone' class='fnname'>clone</a>(&amp;self) -&gt; <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../../src/bittrex/types.rs.html#184' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Returns a copy of the value. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#tymethod.clone">Read more</a></p>
+</div><h4 id='method.clone_from' class="method"><span id='clone_from.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from' class='fnname'>clone_from</a>(&amp;mut self, source: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.reference.html">&amp;</a>Self)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><div class='since' title='Stable since Rust version 1.0.0'>1.0.0</div><a class='srclink' href='https://doc.rust-lang.org/nightly/src/core/clone.rs.html#117-119' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Performs copy-assignment from <code>source</code>. <a href="https://doc.rust-lang.org/nightly/core/clone/trait.Clone.html#method.clone_from">Read more</a></p>
+</div></div></div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt><kbd>?</kbd></dt>
+                    <dd>Show this help dialog</dd>
+                    <dt><kbd>S</kbd></dt>
+                    <dd>Focus the search field</dd>
+                    <dt><kbd>↑</kbd></dt>
+                    <dd>Move up in search results</dd>
+                    <dt><kbd>↓</kbd></dt>
+                    <dd>Move down in search results</dd>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
+                    <dd>Go to active search result</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../../";
+        window.currentCrate = "bittrex";
+    </script>
+    <script src="../../main.js"></script>
+    <script defer src="../../search-index.js"></script>
+</body>
+</html>

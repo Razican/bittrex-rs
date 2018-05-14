@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="generator" content="rustdoc">
+    <meta name="description" content="API documentation for the Rust `Client` struct in crate `bittrex`.">
+    <meta name="keywords" content="rust, rustlang, rust-lang, Client">
+
+    <title>bittrex::Client - Rust</title>
+
+    <link rel="stylesheet" type="text/css" href="../normalize.css">
+    <link rel="stylesheet" type="text/css" href="../rustdoc.css"
+          id="mainThemeStyle">
+    
+    <link rel="stylesheet" type="text/css" href="../dark.css">
+    <link rel="stylesheet" type="text/css" href="../light.css" id="themeStyle">
+    <script src="../storage.js"></script>
+    
+
+    
+    
+</head>
+<body class="rustdoc struct">
+    <!--[if lte IE 8]>
+    <div class="warning">
+        This old browser is unsupported and will most likely display funky
+        things.
+    </div>
+    <![endif]-->
+
+    
+
+    <nav class="sidebar">
+        <div class="sidebar-menu">&#9776;</div>
+        
+        <p class='location'>Struct Client</p><div class="sidebar-elems"><div class="block items"><a class="sidebar-title" href="#fields">Fields</a><div class="sidebar-links"><a href="#structfield.inner">inner</a><a href="#structfield.api_key">api_key</a><a href="#structfield.api_secret">api_secret</a></div><a class="sidebar-title" href="#methods">Methods</a><div class="sidebar-links"><a href="#method.get_balances">get_balances</a><a href="#method.get_markets">get_markets</a><a href="#method.get_currencies">get_currencies</a><a href="#method.get_ticker">get_ticker</a><a href="#method.get_market_summaries">get_market_summaries</a><a href="#method.get_market_summary">get_market_summary</a><a href="#method.get_order_book">get_order_book</a><a href="#method.get_market_history">get_market_history</a><a href="#method.login">login</a><a href="#method.append_login">append_login</a><a href="#method.get_headers">get_headers</a><a href="#method.hash_uri">hash_uri</a></div><a class="sidebar-title" href="#implementations">Trait Implementations</a><div class="sidebar-links"><a href="#impl-Debug">Debug</a><a href="#impl-Default">Default</a></div><a class="sidebar-title" href="#synthetic-implementations">Auto Trait Implementations</a><div class="sidebar-links"><a href="#impl-Send">Send</a><a href="#impl-Sync">Sync</a></div></div><p class='location'><a href='index.html'>bittrex</a></p><script>window.sidebarCurrent = {name: 'Client', ty: 'struct', relpath: ''};</script><script defer src="sidebar-items.js"></script></div>
+    </nav>
+
+    <div class="theme-picker">
+        <button id="theme-picker" aria-label="Pick another theme!">
+            <img src="../brush.svg" width="18" alt="Pick another theme!">
+        </button>
+        <div id="theme-choices"></div>
+    </div>
+    <script src="../theme.js"></script>
+    <nav class="sub">
+        <form class="search-form js-only">
+            <div class="search-container">
+                <input class="search-input" name="search"
+                       autocomplete="off"
+                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
+                       type="search">
+            </div>
+        </form>
+    </nav>
+
+    <section id='main' class="content"><h1 class='fqn'><span class='in-band'>Struct <a href='index.html'>bittrex</a>::<wbr><a class="struct" href=''>Client</a></span><span class='out-of-band'><span id='render-detail'>
+                   <a id="toggle-all-docs" href="javascript:void(0)" title="collapse all docs">
+                       [<span class='inner'>&#x2212;</span>]
+                   </a>
+               </span><a class='srclink' href='../src/bittrex/lib.rs.html#44-51' title='goto source code'>[src]</a></span></h1><div class="docblock type-decl"><pre class='rust struct'>pub struct Client {
+    inner: <a class="struct" href="https://docs.rs/reqwest/0.8.5/reqwest/client/struct.Client.html" title="struct reqwest::client::Client">Client</a>,
+    api_key: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+    api_secret: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;,
+}</pre></div><div class='docblock'><p>Bittrex API client.</p>
+</div><h2 id='fields' class='fields small-section-header'>
+                       Fields<a href='#fields' class='anchor'></a></h2><span id="structfield.inner" class="structfield small-section-header">
+                           <a href="#structfield.inner" class="anchor field"></a>
+                           <span id="inner.v" class='invisible'>
+                           <code>inner: <a class="struct" href="https://docs.rs/reqwest/0.8.5/reqwest/client/struct.Client.html" title="struct reqwest::client::Client">Client</a></code>
+                           </span></span><div class='docblock'><p>Inner reqwest client.</p>
+</div><span id="structfield.api_key" class="structfield small-section-header">
+                           <a href="#structfield.api_key" class="anchor field"></a>
+                           <span id="api_key.v" class='invisible'>
+                           <code>api_key: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>API key.</p>
+</div><span id="structfield.api_secret" class="structfield small-section-header">
+                           <a href="#structfield.api_secret" class="anchor field"></a>
+                           <span id="api_secret.v" class='invisible'>
+                           <code>api_secret: <a class="enum" href="https://doc.rust-lang.org/nightly/core/option/enum.Option.html" title="enum core::option::Option">Option</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;</code>
+                           </span></span><div class='docblock'><p>API secret.</p>
+</div>
+                    <h2 id='methods' class='small-section-header'>
+                      Methods<a href='#methods' class='anchor'></a>
+                    </h2>
+                <h3 id='impl' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/private.rs.html#14-31' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='docblock'><p>Private API methods.</p>
+<p><strong>Note: All this methods will panic if the client is not logged in.</strong></p>
+</div><div class='impl-items'><h4 id='method.get_balances' class="method"><span id='get_balances.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_balances' class='fnname'>get_balances</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../bittrex/types/struct.BalanceInfo.html" title="struct bittrex::types::BalanceInfo">BalanceInfo</a>&gt;, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/private.rs.html#18-30' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the balances of the Bittrex account.</p>
+<p><strong>Note: it will panic if not logged in.</strong></p>
+</div></div><h3 id='impl-1' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-1' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#10-138' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='docblock'><p>Public API methods.</p>
+</div><div class='impl-items'><h4 id='method.get_markets' class="method"><span id='get_markets.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_markets' class='fnname'>get_markets</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../bittrex/types/struct.MarketInfo.html" title="struct bittrex::types::MarketInfo">MarketInfo</a>&gt;, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#12-21' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get the open and available trading markets at Bittrex along with other meta data.</p>
+</div><h4 id='method.get_currencies' class="method"><span id='get_currencies.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_currencies' class='fnname'>get_currencies</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../bittrex/types/struct.CurrencyInfo.html" title="struct bittrex::types::CurrencyInfo">CurrencyInfo</a>&gt;, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#24-33' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get all supported currencies at Bittrex along with other meta data.</p>
+</div><h4 id='method.get_ticker' class="method"><span id='get_ticker.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_ticker' class='fnname'>get_ticker</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;(&amp;self, market: S) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../bittrex/types/struct.TickerInfo.html" title="struct bittrex::types::TickerInfo">TickerInfo</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#36-48' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get the current tick values for a market.</p>
+</div><h4 id='method.get_market_summaries' class="method"><span id='get_market_summaries.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_market_summaries' class='fnname'>get_market_summaries</a>(&amp;self) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/vec/struct.Vec.html" title="struct alloc::vec::Vec">Vec</a>&lt;<a class="struct" href="../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a>&gt;, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#51-60' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get the last 24 hour summary of all active exchanges.</p>
+</div><h4 id='method.get_market_summary' class="method"><span id='get_market_summary.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_market_summary' class='fnname'>get_market_summary</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;market: S<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#63-79' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get the last 24 hour summary of the given market.</p>
+</div><h4 id='method.get_order_book' class="method"><span id='get_order_book.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_order_book' class='fnname'>get_order_book</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;market: S, <br>&nbsp;&nbsp;&nbsp;&nbsp;order_type: <a class="enum" href="../bittrex/enum.OrderBookType.html" title="enum bittrex::OrderBookType">OrderBookType</a>, <br>&nbsp;&nbsp;&nbsp;&nbsp;depth: <a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.u8.html">u8</a><br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../bittrex/types/struct.OrderBook.html" title="struct bittrex::types::OrderBook">OrderBook</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#84-118' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to get retrieve the order book for a given market.</p>
+<p><strong>Panics if the depth is bigger than 50.</strong></p>
+</div><h4 id='method.get_market_history' class="method"><span id='get_market_history.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.get_market_history' class='fnname'>get_market_history</a>&lt;S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.AsRef.html" title="trait core::convert::AsRef">AsRef</a>&lt;<a class="primitive" href="https://doc.rust-lang.org/nightly/std/primitive.str.html">str</a>&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;self, <br>&nbsp;&nbsp;&nbsp;&nbsp;market: S<br>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="../bittrex/types/struct.MarketSummary.html" title="struct bittrex::types::MarketSummary">MarketSummary</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/public.rs.html#121-137' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Used to retrieve the latest trades that have occured for a specific market.</p>
+</div></div><h3 id='impl-2' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-2' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#63-113' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.login' class="method"><span id='login.v' class='invisible'><table class='table-display'><tbody><tr><td><code>pub fn <a href='#method.login' class='fnname'>login</a>&lt;K:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;, S:&nbsp;<a class="trait" href="https://doc.rust-lang.org/nightly/core/convert/trait.Into.html" title="trait core::convert::Into">Into</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>&gt;&gt;(<br>&nbsp;&nbsp;&nbsp;&nbsp;&amp;mut self, <br>&nbsp;&nbsp;&nbsp;&nbsp;api_key: K, <br>&nbsp;&nbsp;&nbsp;&nbsp;api_secret: S<br>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#68-71' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Logs the client in for future private method access.</p>
+<p>Note: This will not perform any request to Bittrex, it will only store the API key and the
+secret for future use.</p>
+</div><h4 id='method.append_login' class="method"><span id='append_login.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='#method.append_login' class='fnname'>append_login</a>(&amp;self, url: &amp;mut <a class="struct" href="https://docs.rs/url/1.7.0/url/struct.Url.html" title="struct url::Url">Url</a>)</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#76-82' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Appends the login information to the query string.</p>
+<p><strong>Note: it will panic if not logged in.</strong></p>
+</div><h4 id='method.get_headers' class="method"><span id='get_headers.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='#method.get_headers' class='fnname'>get_headers</a>(&amp;self, url: &amp;<a class="struct" href="https://docs.rs/url/1.7.0/url/struct.Url.html" title="struct url::Url">Url</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://docs.rs/hyper/0.11.26/hyper/header/struct.Headers.html" title="struct hyper::header::Headers">Headers</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#87-92' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Gets the headers for the given URL.</p>
+<p><strong>Note: it will panic if not logged in.</strong></p>
+</div><h4 id='method.hash_uri' class="method"><span id='hash_uri.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='#method.hash_uri' class='fnname'>hash_uri</a>(&amp;self, url: &amp;<a class="struct" href="https://docs.rs/url/1.7.0/url/struct.Url.html" title="struct url::Url">Url</a>) -&gt; <a class="enum" href="https://doc.rust-lang.org/nightly/core/result/enum.Result.html" title="enum core::result::Result">Result</a>&lt;<a class="struct" href="https://doc.rust-lang.org/nightly/alloc/string/struct.String.html" title="struct alloc::string::String">String</a>, Error&gt;</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#97-112' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Hash the given URI with the logged in API secret.</p>
+<p><strong>Note: it will panic if not logged in.</strong></p>
+</div></div>
+            <h2 id='implementations' class='small-section-header'>
+              Trait Implementations<a href='#implementations' class='anchor'></a>
+            </h2>
+            <div id='implementations-list'>
+        <h3 id='impl-Debug' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html" title="trait core::fmt::Debug">Debug</a> for <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-Debug' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#43' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.fmt' class="method"><span id='fmt.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt' class='fnname'>fmt</a>(&amp;self, __arg_0: &amp;mut <a class="struct" href="https://doc.rust-lang.org/nightly/core/fmt/struct.Formatter.html" title="struct core::fmt::Formatter">Formatter</a>) -&gt; <a class="type" href="https://doc.rust-lang.org/nightly/core/fmt/type.Result.html" title="type core::fmt::Result">Result</a></code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#43' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Formats the value using the given formatter. <a href="https://doc.rust-lang.org/nightly/core/fmt/trait.Debug.html#tymethod.fmt">Read more</a></p>
+</div></div><h3 id='impl-Default' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html" title="trait core::default::Default">Default</a> for <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-Default' class='anchor'></a></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#53-61' title='goto source code'>[src]</a></span></td></tr></tbody></table></h3><div class='impl-items'><h4 id='method.default' class="method"><span id='default.v' class='invisible'><table class='table-display'><tbody><tr><td><code>fn <a href='https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default' class='fnname'>default</a>() -&gt; Self</code></span></td><td><span class='out-of-band'><div class='ghost'></div><a class='srclink' href='../src/bittrex/lib.rs.html#54-60' title='goto source code'>[src]</a></td></tr></tbody></table></span></h4><div class='docblock'><p>Returns the &quot;default value&quot; for a type. <a href="https://doc.rust-lang.org/nightly/core/default/trait.Default.html#tymethod.default">Read more</a></p>
+</div></div></div>
+                <h2 id='synthetic-implementations' class='small-section-header'>
+                  Auto Trait Implementations<a href='#synthetic-implementations' class='anchor'></a>
+                </h2>
+                <div id='synthetic-implementations-list'>
+            <h3 id='impl-Send' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Send.html" title="trait core::marker::Send">Send</a> for <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-Send' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div><h3 id='impl-Sync' class='impl'><span class='in-band'><table class='table-display'><tbody><tr><td><code>impl <a class="trait" href="https://doc.rust-lang.org/nightly/core/marker/trait.Sync.html" title="trait core::marker::Sync">Sync</a> for <a class="struct" href="../bittrex/struct.Client.html" title="struct bittrex::Client">Client</a></code><a href='#impl-Sync' class='anchor'></a></span></td><td><span class='out-of-band'></span></td></tr></tbody></table></h3><div class='impl-items'></div></div></section>
+    <section id='search' class="content hidden"></section>
+
+    <section class="footer"></section>
+
+    <aside id="help" class="hidden">
+        <div>
+            <h1 class="hidden">Help</h1>
+
+            <div class="shortcuts">
+                <h2>Keyboard Shortcuts</h2>
+
+                <dl>
+                    <dt><kbd>?</kbd></dt>
+                    <dd>Show this help dialog</dd>
+                    <dt><kbd>S</kbd></dt>
+                    <dd>Focus the search field</dd>
+                    <dt><kbd>↑</kbd></dt>
+                    <dd>Move up in search results</dd>
+                    <dt><kbd>↓</kbd></dt>
+                    <dd>Move down in search results</dd>
+                    <dt><kbd>↹</kbd></dt>
+                    <dd>Switch tab</dd>
+                    <dt><kbd>&#9166;</kbd></dt>
+                    <dd>Go to active search result</dd>
+                    <dt><kbd>+</kbd></dt>
+                    <dd>Expand all sections</dd>
+                    <dt><kbd>-</kbd></dt>
+                    <dd>Collapse all sections</dd>
+                </dl>
+            </div>
+
+            <div class="infos">
+                <h2>Search Tricks</h2>
+
+                <p>
+                    Prefix searches with a type followed by a colon (e.g.
+                    <code>fn:</code>) to restrict the search to a given type.
+                </p>
+
+                <p>
+                    Accepted types are: <code>fn</code>, <code>mod</code>,
+                    <code>struct</code>, <code>enum</code>,
+                    <code>trait</code>, <code>type</code>, <code>macro</code>,
+                    and <code>const</code>.
+                </p>
+
+                <p>
+                    Search functions by type signature (e.g.
+                    <code>vec -> usize</code> or <code>* -> vec</code>)
+                </p>
+            </div>
+        </div>
+    </aside>
+
+    
+
+    <script>
+        window.rootPath = "../";
+        window.currentCrate = "bittrex";
+    </script>
+    <script src="../main.js"></script>
+    <script defer src="../search-index.js"></script>
+</body>
+</html>
