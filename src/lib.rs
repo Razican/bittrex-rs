@@ -6,7 +6,6 @@
 #![deny(variant_size_differences, unused_results, unused_qualifications, unused_import_braces,
         unsafe_code, trivial_numeric_casts, trivial_casts, missing_docs,
         missing_debug_implementations, missing_copy_implementations, unused_extern_crates)]
-
 // Allowing these for now.
 #![cfg_attr(feature = "cargo-clippy", allow(similar_names))]
 
