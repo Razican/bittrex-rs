@@ -1,61 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="generator" content="rustdoc">
-    <meta name="description" content="Source to the Rust file `src/lib.rs`.">
-    <meta name="keywords" content="rust, rustlang, rust-lang">
-
-    <title>lib.rs.html -- source</title>
-
-    <link rel="stylesheet" type="text/css" href="../../normalize.css">
-    <link rel="stylesheet" type="text/css" href="../../rustdoc.css"
-          id="mainThemeStyle">
-    
-    <link rel="stylesheet" type="text/css" href="../../dark.css">
-    <link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle">
-    <script src="../../storage.js"></script>
-    
-
-    
-    
-</head>
-<body class="rustdoc source">
-    <!--[if lte IE 8]>
-    <div class="warning">
-        This old browser is unsupported and will most likely display funky
-        things.
-    </div>
-    <![endif]-->
-
-    
-
-    <nav class="sidebar">
-        <div class="sidebar-menu">&#9776;</div>
-        
-        
-    </nav>
-
-    <div class="theme-picker">
-        <button id="theme-picker" aria-label="Pick another theme!">
-            <img src="../../brush.svg" width="18" alt="Pick another theme!">
-        </button>
-        <div id="theme-choices"></div>
-    </div>
-    <script src="../../theme.js"></script>
-    <nav class="sub">
-        <form class="search-form js-only">
-            <div class="search-container">
-                <input class="search-input" name="search"
-                       autocomplete="off"
-                       placeholder="Click or press ‘S’ to search, ‘?’ for more options…"
-                       type="search">
-            </div>
-        </form>
-    </nav>
-
-    <section id='main' class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `src/lib.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>lib.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../normalize.css"><link rel="stylesheet" type="text/css" href="../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../dark.css"><link rel="stylesheet" type="text/css" href="../../light.css" id="themeStyle"><script src="../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../settings.html"><img src="../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -198,42 +141,50 @@
 <span id="141">141</span>
 <span id="142">142</span>
 <span id="143">143</span>
+<span id="144">144</span>
+<span id="145">145</span>
+<span id="146">146</span>
+<span id="147">147</span>
+<span id="148">148</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Bittrex API.</span>
 
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">deny</span>(<span class="ident">clippy</span>))]</span>
 <span class="attribute">#![<span class="ident">forbid</span>(<span class="ident">anonymous_parameters</span>)]</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">warn</span>(<span class="ident">clippy_pedantic</span>))]</span>
-<span class="attribute">#![<span class="ident">deny</span>(<span class="ident">variant_size_differences</span>, <span class="ident">unused_results</span>, <span class="ident">unused_qualifications</span>, <span class="ident">unused_import_braces</span>,
-        <span class="ident">unsafe_code</span>, <span class="ident">trivial_numeric_casts</span>, <span class="ident">trivial_casts</span>, <span class="ident">missing_docs</span>,
-        <span class="ident">missing_debug_implementations</span>, <span class="ident">missing_copy_implementations</span>, <span class="ident">unused_extern_crates</span>)]</span>
+<span class="attribute">#![<span class="ident">warn</span>(<span class="ident">clippy</span>::<span class="ident">pedantic</span>)]</span>
+<span class="attribute">#![<span class="ident">deny</span>(
+    <span class="ident">clippy</span>::<span class="ident">all</span>,
+    <span class="ident">variant_size_differences</span>,
+    <span class="ident">unused_results</span>,
+    <span class="ident">unused_qualifications</span>,
+    <span class="ident">unused_import_braces</span>,
+    <span class="ident">unsafe_code</span>,
+    <span class="ident">trivial_numeric_casts</span>,
+    <span class="ident">trivial_casts</span>,
+    <span class="ident">missing_docs</span>,
+    <span class="ident">missing_debug_implementations</span>,
+    <span class="ident">missing_copy_implementations</span>,
+    <span class="ident">unused_extern_crates</span>
+)]</span>
 <span class="comment">// Allowing these for now.</span>
-<span class="attribute">#![<span class="ident">cfg_attr</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;cargo-clippy&quot;</span>, <span class="ident">allow</span>(<span class="ident">similar_names</span>))]</span>
+<span class="attribute">#![<span class="ident">allow</span>(<span class="ident">clippy</span>::<span class="ident">similar_names</span>)]</span>
 
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">chrono</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">failure</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hex</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">hmac</span>;
-<span class="attribute">#[<span class="ident">macro_use</span>]</span>
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">lazy_static</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">reqwest</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde</span>;
 <span class="attribute">#[<span class="ident">macro_use</span>]</span>
 <span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">serde_derive</span>;
-<span class="kw">extern</span> <span class="kw">crate</span> <span class="ident">sha2</span>;
 
 <span class="kw">mod</span> <span class="ident">private</span>;
 <span class="kw">mod</span> <span class="ident">public</span>;
 <span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">types</span>;
 
 <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">Utc</span>;
-<span class="kw">use</span> <span class="ident">failure</span>::<span class="ident">Error</span>;
-<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">Url</span>;
-<span class="kw">use</span> <span class="ident">reqwest</span>::<span class="ident">header</span>::<span class="ident">Headers</span>;
+<span class="kw">use</span> <span class="ident">failure</span>::{<span class="ident">format_err</span>, <span class="ident">Error</span>};
+<span class="kw">use</span> <span class="ident">lazy_static</span>::<span class="ident">lazy_static</span>;
+<span class="kw">use</span> <span class="ident">reqwest</span>::{
+    <span class="ident">header</span>::{<span class="ident">HeaderMap</span>, <span class="ident">HeaderValue</span>},
+    <span class="ident">Url</span>,
+};
 <span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
-<span class="kw">pub</span> <span class="kw">use</span> <span class="ident">public</span>::<span class="ident">OrderBookType</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">public</span>::<span class="ident">OrderBookType</span>;
 
 <span class="doccomment">/// API URL.</span>
 <span class="macro">lazy_static</span><span class="macro">!</span> {
@@ -277,7 +228,8 @@
     <span class="kw">fn</span> <span class="ident">append_login</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">url</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Url</span>) {
         <span class="kw">let</span> <span class="ident">api_key</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_key</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>();
         <span class="kw">let</span> <span class="ident">nonce</span> <span class="op">=</span> <span class="ident">Utc</span>::<span class="ident">now</span>().<span class="ident">timestamp</span>();
-        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">url</span>.<span class="ident">query_pairs_mut</span>()
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">url</span>
+            .<span class="ident">query_pairs_mut</span>()
             .<span class="ident">append_pair</span>(<span class="string">&quot;apikey&quot;</span>, <span class="ident">api_key</span>)
             .<span class="ident">append_pair</span>(<span class="string">&quot;nonce&quot;</span>, <span class="kw-2">&amp;</span><span class="macro">format</span><span class="macro">!</span>(<span class="string">&quot;{}&quot;</span>, <span class="ident">nonce</span>));
     }
@@ -285,10 +237,10 @@
     <span class="doccomment">/// Gets the headers for the given URL.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// **Note: it will panic if not logged in.**</span>
-    <span class="kw">fn</span> <span class="ident">get_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">url</span>: <span class="kw-2">&amp;</span><span class="ident">Url</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">Headers</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">Headers</span>::<span class="ident">new</span>();
+    <span class="kw">fn</span> <span class="ident">get_headers</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">url</span>: <span class="kw-2">&amp;</span><span class="ident">Url</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">HeaderMap</span>, <span class="ident">Error</span><span class="op">&gt;</span> {
+        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">headers</span> <span class="op">=</span> <span class="ident">HeaderMap</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="ident">hash</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">hash_uri</span>(<span class="ident">url</span>);
-        <span class="ident">headers</span>.<span class="ident">set_raw</span>(<span class="string">&quot;apisign&quot;</span>, <span class="ident">hash</span><span class="question-mark">?</span>);
+        <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">headers</span>.<span class="ident">insert</span>(<span class="string">&quot;apisign&quot;</span>, <span class="ident">HeaderValue</span>::<span class="ident">from_str</span>(<span class="kw-2">&amp;</span><span class="ident">hash</span><span class="question-mark">?</span>)<span class="question-mark">?</span>);
         <span class="prelude-val">Ok</span>(<span class="ident">headers</span>)
     }
 
@@ -300,7 +252,8 @@
         <span class="kw">use</span> <span class="ident">hmac</span>::{<span class="ident">Hmac</span>, <span class="ident">Mac</span>};
         <span class="kw">use</span> <span class="ident">sha2</span>::<span class="ident">Sha512</span>;
 
-        <span class="kw">let</span> <span class="ident">api_secret</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">api_secret</span>
+        <span class="kw">let</span> <span class="ident">api_secret</span> <span class="op">=</span> <span class="self">self</span>
+            .<span class="ident">api_secret</span>
             .<span class="ident">as_ref</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;the client was not logged in&quot;</span>);
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">hmac</span> <span class="op">=</span> <span class="ident">Hmac</span>::<span class="op">&lt;</span><span class="ident">Sha512</span><span class="op">&gt;</span>::<span class="ident">new_varkey</span>(<span class="ident">api_secret</span>.<span class="ident">as_bytes</span>())
@@ -316,7 +269,7 @@
 <span class="doccomment">/// API result structure.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>)]</span>
 <span class="kw">struct</span> <span class="ident">ApiResult</span><span class="op">&lt;</span><span class="ident">R</span><span class="op">&gt;</span> {
-    <span class="doccomment">/// Wether the API call was successfull.</span>
+    <span class="doccomment">/// Wether the API call was successful.</span>
     <span class="ident">success</span>: <span class="ident">bool</span>,
     <span class="doccomment">/// The message returned in the API call.</span>
     <span class="ident">message</span>: <span class="ident">String</span>,
@@ -343,68 +296,4 @@
     }
 }
 </pre>
-</section>
-    <section id='search' class="content hidden"></section>
-
-    <section class="footer"></section>
-
-    <aside id="help" class="hidden">
-        <div>
-            <h1 class="hidden">Help</h1>
-
-            <div class="shortcuts">
-                <h2>Keyboard Shortcuts</h2>
-
-                <dl>
-                    <dt><kbd>?</kbd></dt>
-                    <dd>Show this help dialog</dd>
-                    <dt><kbd>S</kbd></dt>
-                    <dd>Focus the search field</dd>
-                    <dt><kbd>↑</kbd></dt>
-                    <dd>Move up in search results</dd>
-                    <dt><kbd>↓</kbd></dt>
-                    <dd>Move down in search results</dd>
-                    <dt><kbd>↹</kbd></dt>
-                    <dd>Switch tab</dd>
-                    <dt><kbd>&#9166;</kbd></dt>
-                    <dd>Go to active search result</dd>
-                    <dt><kbd>+</kbd></dt>
-                    <dd>Expand all sections</dd>
-                    <dt><kbd>-</kbd></dt>
-                    <dd>Collapse all sections</dd>
-                </dl>
-            </div>
-
-            <div class="infos">
-                <h2>Search Tricks</h2>
-
-                <p>
-                    Prefix searches with a type followed by a colon (e.g.
-                    <code>fn:</code>) to restrict the search to a given type.
-                </p>
-
-                <p>
-                    Accepted types are: <code>fn</code>, <code>mod</code>,
-                    <code>struct</code>, <code>enum</code>,
-                    <code>trait</code>, <code>type</code>, <code>macro</code>,
-                    and <code>const</code>.
-                </p>
-
-                <p>
-                    Search functions by type signature (e.g.
-                    <code>vec -> usize</code> or <code>* -> vec</code>)
-                </p>
-            </div>
-        </div>
-    </aside>
-
-    
-
-    <script>
-        window.rootPath = "../../";
-        window.currentCrate = "bittrex";
-    </script>
-    <script src="../../main.js"></script>
-    <script defer src="../../search-index.js"></script>
-</body>
-</html>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../";window.currentCrate = "bittrex";</script><script src="../../aliases.js"></script><script src="../../main.js"></script><script defer src="../../search-index.js"></script></body></html>
