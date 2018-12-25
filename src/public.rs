@@ -1,10 +1,10 @@
 //! Public API methods.
 
-use failure::Error;
+use failure::{format_err, Error};
+use lazy_static::lazy_static;
 use reqwest::Url;
 
-use types::*;
-use {ApiResult, Client, API_URL};
+use crate::{types::*, ApiResult, Client, API_URL};
 
 /// Public API methods.
 impl Client {
@@ -94,7 +94,8 @@ impl Client {
         }
 
         let mut url = URL.clone();
-        let _ = url.query_pairs_mut()
+        let _ = url
+            .query_pairs_mut()
             .append_pair("market", market.as_ref())
             .append_pair("type", order_type.as_str())
             .append_pair("depth", &format!("{}", depth));
@@ -117,7 +118,7 @@ impl Client {
         }
     }
 
-    /// Used to retrieve the latest trades that have occured for a specific market.
+    /// Used to retrieve the latest trades that have occurred for a specific market.
     pub fn get_market_history<S: AsRef<str>>(&self, market: S) -> Result<MarketSummary, Error> {
         lazy_static! {
             /// URL for the `get_currencies` endpoint.

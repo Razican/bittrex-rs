@@ -1,38 +1,41 @@
 //! Bittrex API.
 
-#![cfg_attr(feature = "cargo-clippy", deny(clippy))]
 #![forbid(anonymous_parameters)]
-#![cfg_attr(feature = "cargo-clippy", warn(clippy_pedantic))]
-#![deny(variant_size_differences, unused_results, unused_qualifications, unused_import_braces,
-        unsafe_code, trivial_numeric_casts, trivial_casts, missing_docs,
-        missing_debug_implementations, missing_copy_implementations, unused_extern_crates)]
+#![warn(clippy::pedantic)]
+#![deny(
+    clippy::all,
+    variant_size_differences,
+    unused_results,
+    unused_qualifications,
+    unused_import_braces,
+    unsafe_code,
+    trivial_numeric_casts,
+    trivial_casts,
+    missing_docs,
+    missing_debug_implementations,
+    missing_copy_implementations,
+    unused_extern_crates
+)]
 // Allowing these for now.
-#![cfg_attr(feature = "cargo-clippy", allow(similar_names))]
+#![allow(clippy::similar_names)]
 
-extern crate chrono;
-#[macro_use]
-extern crate failure;
-extern crate hex;
-extern crate hmac;
-#[macro_use]
-extern crate lazy_static;
-extern crate reqwest;
-extern crate serde;
 #[macro_use]
 extern crate serde_derive;
-extern crate sha2;
 
 mod private;
 mod public;
 pub mod types;
 
 use chrono::Utc;
-use failure::Error;
-use reqwest::Url;
-use reqwest::header::Headers;
+use failure::{format_err, Error};
+use lazy_static::lazy_static;
+use reqwest::{
+    header::{HeaderMap, HeaderValue},
+    Url,
+};
 use serde::Deserialize;
 
-pub use public::OrderBookType;
+pub use crate::public::OrderBookType;
 
 /// API URL.
 lazy_static! {
@@ -76,7 +79,8 @@ impl Client {
     fn append_login(&self, url: &mut Url) {
         let api_key = self.api_key.as_ref().unwrap();
         let nonce = Utc::now().timestamp();
-        let _ = url.query_pairs_mut()
+        let _ = url
+            .query_pairs_mut()
             .append_pair("apikey", api_key)
             .append_pair("nonce", &format!("{}", nonce));
     }
@@ -84,10 +88,10 @@ impl Client {
     /// Gets the headers for the given URL.
     ///
     /// **Note: it will panic if not logged in.**
-    fn get_headers(&self, url: &Url) -> Result<Headers, Error> {
-        let mut headers = Headers::new();
+    fn get_headers(&self, url: &Url) -> Result<HeaderMap, Error> {
+        let mut headers = HeaderMap::new();
         let hash = self.hash_uri(url);
-        headers.set_raw("apisign", hash?);
+        let _ = headers.insert("apisign", HeaderValue::from_str(&hash?)?);
         Ok(headers)
     }
 
@@ -99,7 +103,8 @@ impl Client {
         use hmac::{Hmac, Mac};
         use sha2::Sha512;
 
-        let api_secret = self.api_secret
+        let api_secret = self
+            .api_secret
             .as_ref()
             .expect("the client was not logged in");
         let mut hmac = Hmac::<Sha512>::new_varkey(api_secret.as_bytes())
@@ -115,7 +120,7 @@ impl Client {
 /// API result structure.
 #[derive(Debug, Clone, Deserialize)]
 struct ApiResult<R> {
-    /// Wether the API call was successfull.
+    /// Wether the API call was successful.
     success: bool,
     /// The message returned in the API call.
     message: String,
