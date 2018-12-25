@@ -53,6 +53,7 @@ jobs:
 matrix:
   allow_failures:
   - os: windows
+  - rust: nightly
 
 # Run the multiple tests.
 script:
