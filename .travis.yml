@@ -49,6 +49,19 @@ jobs:
       on:
         repo: Razican/vsop87-rs
         branch: develop
+  # Crates.io deployment
+  - name: "crates.io deployment"
+    os: linux
+    rust: stable
+    stage: deploy
+    env: CACHE_NAME=DEPLOY
+    script: skip
+    deploy:
+      provider: cargo
+      token: $CARGO_TOKEN
+      on:
+        repo: Razican/bittrex-rs
+        tags: true
 
 matrix:
   allow_failures:
