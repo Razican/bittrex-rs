@@ -330,12 +330,12 @@ pub struct Order {
 
 impl Order {
     /// Gets the quantity being ordered.
-    pub fn quantity(&self) -> f32 {
+    pub fn quantity(self) -> f32 {
         self.quantity
     }
 
     /// Gets the rate/price of the order.
-    pub fn rate(&self) -> f32 {
+    pub fn rate(self) -> f32 {
         self.rate
     }
 }

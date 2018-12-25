@@ -3,10 +3,10 @@
 //! **Note: All this methods will panic if the client is not logged in.**
 
 use failure::Error;
+use lazy_static::lazy_static;
 use reqwest::Url;
 
-use types::*;
-use {ApiResult, Client, API_URL};
+use crate::{types::*, ApiResult, Client, API_URL};
 
 /// Private API methods.
 ///

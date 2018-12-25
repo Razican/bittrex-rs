@@ -102,11 +102,9 @@ fn it_get_order_book() {
         .get_order_book("BTC-ZEC", OrderBookType::Both, 50)
         .unwrap();
 
-    assert!(
-        client
-            .get_order_book("Invalid market", OrderBookType::Both, 50)
-            .is_err()
-    );
+    assert!(client
+        .get_order_book("Invalid market", OrderBookType::Both, 50)
+        .is_err());
 }
 
 /// Tests an invalid order book depth, that should panic.
