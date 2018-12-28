@@ -26,8 +26,7 @@ lazy_static = "1.2.0"
 reqwest = "0.9.5"
 sha2 = "0.8.0"
 hmac = "0.7.0"
-serde = "1.0.82"
-serde_derive = "1.0.82"
+serde = { version = "1.0.83", features = ["derive"] }
 hex = "0.3.2"
 failure = "0.1.3"
 

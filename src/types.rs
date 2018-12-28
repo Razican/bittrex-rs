@@ -1,6 +1,7 @@
 //! Types for Bittrex API.
 
 use chrono::NaiveDateTime;
+use serde::Deserialize;
 
 /// Market information structure.
 #[derive(Debug, Clone, Deserialize)]

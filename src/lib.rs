@@ -19,9 +19,6 @@
 // Allowing these for now.
 #![allow(clippy::similar_names)]
 
-#[macro_use]
-extern crate serde_derive;
-
 mod private;
 mod public;
 pub mod types;
