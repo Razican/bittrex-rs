@@ -47,7 +47,7 @@ jobs:
       skip_cleanup: true
       keep-history: true
       on:
-        repo: Razican/vsop87-rs
+        repo: Razican/bittrex-rs
         branch: develop
   # Crates.io deployment
   - name: "crates.io deployment"
