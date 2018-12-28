@@ -404,10 +404,12 @@
 <span id="404">404</span>
 <span id="405">405</span>
 <span id="406">406</span>
+<span id="407">407</span>
 </pre><pre class="rust ">
 <span class="doccomment">//! Types for Bittrex API.</span>
 
 <span class="kw">use</span> <span class="ident">chrono</span>::<span class="ident">NaiveDateTime</span>;
+<span class="kw">use</span> <span class="ident">serde</span>::<span class="ident">Deserialize</span>;
 
 <span class="doccomment">/// Market information structure.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>, <span class="ident">Clone</span>, <span class="ident">Deserialize</span>)]</span>
