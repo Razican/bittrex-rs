@@ -1,6 +1,6 @@
 [package]
 name = "bittrex"
-version = "0.5.1"
+version = "0.5.2"
 authors = [
   "Razican <razican@protonmail.ch>"
 ]
@@ -20,6 +20,7 @@ travis-ci = { repository = "Razican/bittrex-rs", branch = "master" }
 codecov = { repository = "Razican/bittrex-rs", branch = "master", service = "github" }
 is-it-maintained-issue-resolution = { repository = "Razican/bittrex-rs" }
 is-it-maintained-open-issues = { repository = "Razican/bittrex-rs" }
+maintenance = { status = "passively-maintained" }
 
 [dependencies]
 lazy_static = "1.2.0"
