@@ -1,294 +1,143 @@
 //! Types for Bittrex API.
 
 use chrono::NaiveDateTime;
+use getset::{CopyGetters, Getters};
 use serde::Deserialize;
 
 /// Market information structure.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, CopyGetters, Getters)]
 #[serde(rename_all = "PascalCase")]
 pub struct MarketInfo {
     /// Currency of the market.
+    #[get = "pub"]
     market_currency: String,
     /// Base currency of the market.
+    #[get = "pub"]
     base_currency: String,
     /// Long name of the currency of the market.
+    #[get = "pub"]
     market_currency_long: String,
     /// Long name of the base currency of the market.
+    #[get = "pub"]
     base_currency_long: String,
     /// Minimum trade size.
+    #[get_copy = "pub"]
     min_trade_size: f64,
     /// Market name.
+    #[get = "pub"]
     market_name: String,
     /// Wether the market is active or not.
+    #[get_copy = "pub"]
     is_active: bool,
     /// Creation date and time of the market.
+    #[get_copy = "pub"]
     created: NaiveDateTime,
     /// Notice about the market.
+    #[get = "pub"]
     notice: Option<String>,
     /// Wether the market is sponsored.
+    #[get_copy = "pub"]
     is_sponsored: Option<bool>,
     /// The logo URL for the market.
+    #[get = "pub"]
     logo_url: Option<String>,
 }
 
-impl MarketInfo {
-    /// Gets the market currency.
-    pub fn market_currency(&self) -> &str {
-        &self.market_currency
-    }
-
-    /// Gets the base currency.
-    pub fn base_currency(&self) -> &str {
-        &self.base_currency
-    }
-
-    /// Gets the long name of the market currency.
-    pub fn market_currency_long(&self) -> &str {
-        &self.market_currency_long
-    }
-
-    /// Gets the long name of the base currency.
-    pub fn base_currency_long(&self) -> &str {
-        &self.base_currency_long
-    }
-
-    /// Gets the minimum trade size.
-    pub fn min_trade_size(&self) -> f64 {
-        self.min_trade_size
-    }
-
-    /// Gets the market name.
-    pub fn market_name(&self) -> &str {
-        &self.market_name
-    }
-
-    /// Gets wether the market is active or not.
-    pub fn is_active(&self) -> bool {
-        self.is_active
-    }
-
-    /// Gets the market creation time.
-    pub fn created(&self) -> NaiveDateTime {
-        self.created
-    }
-
-    /// Gets the optional notice in the market.
-    pub fn notice(&self) -> Option<&String> {
-        self.notice.as_ref()
-    }
-
-    /// Gets wether the market is sponsored
-    pub fn is_sponsored(&self) -> Option<bool> {
-        self.is_sponsored
-    }
-
-    /// Gets the logo URL for the market.
-    pub fn logo_url(&self) -> Option<&String> {
-        self.logo_url.as_ref()
-    }
-}
-
 /// Currency information structure.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, Getters, CopyGetters)]
 #[serde(rename_all = "PascalCase")]
 pub struct CurrencyInfo {
     /// 3-letter currency code.
+    #[get = "pub"]
     currency: String,
     /// Long currency name.
+    #[get = "pub"]
     currency_long: String,
     /// Minimum number of confirmations to credit the account.
+    #[get_copy = "pub"]
     min_confirmation: u32,
     /// Transaction fee.
+    #[get_copy = "pub"]
     tx_fee: f32,
     /// Wether the currency is active or not.
+    #[get_copy = "pub"]
     is_active: bool,
     /// Coin type string constant.
+    #[get = "pub"]
     coin_type: String,
     /// Optional base address for the coin at Bittrex.
+    #[get = "pub"]
     base_address: Option<String>,
     /// Optional notice about the currency.
+    #[get = "pub"]
     notice: Option<String>,
 }
 
-impl CurrencyInfo {
-    /// Gets the 3-letter currency code.
-    pub fn currency(&self) -> &str {
-        &self.currency
-    }
-
-    /// Gets the long currency name.
-    pub fn currency_long(&self) -> &str {
-        &self.currency_long
-    }
-
-    /// Gets the minimum number of confirmations to credit the account.
-    pub fn min_confirmation(&self) -> u32 {
-        self.min_confirmation
-    }
-
-    /// Gets the transaction fee.
-    pub fn tx_fee(&self) -> f32 {
-        self.tx_fee
-    }
-
-    /// Gets wether the currency is active or not.
-    pub fn is_active(&self) -> bool {
-        self.is_active
-    }
-
-    /// Gets the coin type string constant.
-    pub fn coin_type(&self) -> &str {
-        &self.coin_type
-    }
-
-    /// Gets the base address for the coin at Bittrex.
-    pub fn base_address(&self) -> Option<&String> {
-        self.base_address.as_ref()
-    }
-
-    /// Gets the optional notice about the currency.
-    pub fn notice(&self) -> Option<&String> {
-        self.notice.as_ref()
-    }
-}
-
 /// Ticker information structure.
-#[derive(Debug, Copy, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Deserialize, CopyGetters)]
 #[serde(rename_all = "PascalCase")]
 pub struct TickerInfo {
     /// Current bidding/buying price for the market.
+    #[get_copy = "pub"]
     bid: f32,
     /// Current asking/selling price for the market.
+    #[get_copy = "pub"]
     ask: f32,
     /// Last transaction price.
+    #[get_copy = "pub"]
     last: f32,
 }
 
-impl TickerInfo {
-    /// Gets the current bidding/buying price for the market.
-    pub fn bid(&self) -> f32 {
-        self.bid
-    }
-
-    /// Gets the current asking/selling price for the market.
-    pub fn ask(&self) -> f32 {
-        self.ask
-    }
-
-    /// Gets the last transaction price.
-    pub fn last(&self) -> f32 {
-        self.last
-    }
-}
-
 /// Market summary structure
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, CopyGetters, Getters)]
 #[serde(rename_all = "PascalCase")]
 pub struct MarketSummary {
     /// Name of the market.
+    #[get = "pub"]
     market_name: String,
     /// Highest transaction value in the last 24 hours for the market.
+    #[get_copy = "pub"]
     high: Option<f32>,
     /// Lowest transaction value in the last 24 hours for the market.
+    #[get_copy = "pub"]
     low: Option<f32>,
     /// Last transaction price.
+    #[get_copy = "pub"]
     last: Option<f32>,
     /// Current bidding/buying price.
+    #[get_copy = "pub"]
     bid: Option<f32>,
     /// Current asking/selling price.
+    #[get_copy = "pub"]
     ask: Option<f32>,
     /// Volume of the market.
+    #[get_copy = "pub"]
     volume: Option<f32>,
     /// Base volume of the market.
+    #[get_copy = "pub"]
     base_volume: Option<f32>,
     /// Timestamp of the information.
+    #[get_copy = "pub"]
     time_stamp: NaiveDateTime,
     /// Number of open buying orders.
+    #[get_copy = "pub"]
     open_buy_orders: Option<u32>,
     /// Number of open selling orders.
+    #[get_copy = "pub"]
     open_sell_orders: Option<u32>,
+    /// Tthe price of the previous day.
+    #[get_copy = "pub"]
     prev_day: f32,
     /// Market creation time.
+    #[get_copy = "pub"]
     created: NaiveDateTime,
     /// Name to display for the market.
+    #[get = "pub"]
     display_market_name: Option<String>,
-}
-
-impl MarketSummary {
-    /// Gets the name of the market.
-    pub fn market_name(&self) -> &str {
-        &self.market_name
-    }
-
-    /// Gets the highest transaction value in the last 24 hours for the market.
-    pub fn high(&self) -> Option<f32> {
-        self.high
-    }
-
-    /// Gets the lowest transaction value in the last 24 hours for the market.
-    pub fn low(&self) -> Option<f32> {
-        self.low
-    }
-
-    /// Gets the last transaction price.
-    pub fn last(&self) -> Option<f32> {
-        self.last
-    }
-
-    /// Gets the current bidding/buying price.
-    pub fn bid(&self) -> Option<f32> {
-        self.bid
-    }
-
-    /// Gets the current asking/selling price.
-    pub fn ask(&self) -> Option<f32> {
-        self.ask
-    }
-
-    /// Gets the volume of the market.
-    pub fn volume(&self) -> Option<f32> {
-        self.volume
-    }
-
-    /// Gets the base volume of the market.
-    pub fn base_volume(&self) -> Option<f32> {
-        self.base_volume
-    }
-
-    /// Gets the timestamp of the information.
-    pub fn time_stamp(&self) -> NaiveDateTime {
-        self.time_stamp
-    }
-
-    /// Gets the number of open buying orders.
-    pub fn open_buy_orders(&self) -> Option<u32> {
-        self.open_buy_orders
-    }
-
-    /// Gets the number of open selling orders.
-    pub fn open_sell_orders(&self) -> Option<u32> {
-        self.open_sell_orders
-    }
-
-    /// Gets the price of the previous day.
-    pub fn prev_day(&self) -> f32 {
-        self.prev_day
-    }
-
-    /// Gets the market creation time.
-    pub fn created(&self) -> NaiveDateTime {
-        self.created
-    }
-
-    /// Gets the name to display for the market.
-    pub fn display_market_name(&self) -> Option<&String> {
-        self.display_market_name.as_ref()
-    }
 }
 
 /// Structure representing an order book.
 #[derive(Debug, Clone, Deserialize)]
-
 pub struct OrderBook {
     /// List of buying orders.
     buy: Box<[Order]>,
@@ -320,88 +169,40 @@ impl OrderBook {
 }
 
 /// Structure representing an order.
-#[derive(Debug, Copy, Clone, Deserialize)]
+#[derive(Debug, Copy, Clone, Deserialize, CopyGetters)]
 #[serde(rename_all = "PascalCase")]
 pub struct Order {
     /// Quantity being ordered.
+    #[get_copy = "pub"]
     quantity: f32,
     /// Rate/price of the order
+    #[get_copy = "pub"]
     rate: f32,
 }
 
-impl Order {
-    /// Gets the quantity being ordered.
-    pub fn quantity(self) -> f32 {
-        self.quantity
-    }
-
-    /// Gets the rate/price of the order.
-    pub fn rate(self) -> f32 {
-        self.rate
-    }
-}
-
 /// Structure representing a currency balance information.
-#[derive(Debug, Clone, Deserialize)]
+#[derive(Debug, Clone, Deserialize, CopyGetters, Getters)]
 #[serde(rename_all = "PascalCase")]
 pub struct BalanceInfo {
     /// Currency code.
+    #[get = "pub"]
     currency: String,
     /// Balance for the currency.
+    #[get_copy = "pub"]
     balance: f32,
     /// Available balance for the currency.
+    #[get_copy = "pub"]
     available: f32,
     /// Pending balance for the currency.
+    #[get_copy = "pub"]
     pending: f32,
     /// Address of the currency for deposits.
+    #[get = "pub"]
     crypto_address: Option<String>,
     /// Wether a withdrawal has been requested.
+    #[get_copy = "pub"]
     requested: Option<bool>,
     /// UUID of the currency.
+    #[get = "pub"]
     uuid: Option<String>,
-}
-
-impl BalanceInfo {
-    /// Gets the currency code.
-    pub fn currency(&self) -> &str {
-        &self.currency
-    }
-
-    /// Gets the balance for the currency.
-    pub fn balance(&self) -> f32 {
-        self.balance
-    }
-
-    /// Gets the available balance for the currency.
-    pub fn available(&self) -> f32 {
-        self.available
-    }
-
-    /// Gets the pending balance for the currency.
-    pub fn pending(&self) -> f32 {
-        self.pending
-    }
-
-    /// Gets the address of the currency for deposits.
-    pub fn crypto_address(&self) -> Option<&str> {
-        if let Some(s) = &self.crypto_address {
-            Some(s.as_str())
-        } else {
-            None
-        }
-    }
-
-    /// Gets wether a withdrawal has been requested.
-    pub fn requested(&self) -> bool {
-        self.requested == Some(true)
-    }
-
-    /// Gets the UUID of the currency.
-    pub fn uuid(&self) -> Option<&str> {
-        if let Some(s) = &self.uuid {
-            Some(s.as_str())
-        } else {
-            None
-        }
-    }
 }

@@ -1,12 +1,35 @@
-extern crate bittrex;
-extern crate chrono;
-extern crate dotenv;
+//! Integration tests module.
 
-use std::env;
+#![forbid(anonymous_parameters, unsafe_code)]
+#![warn(clippy::pedantic)]
+#![deny(
+    clippy::all,
+    variant_size_differences,
+    unused,
+    unused_qualifications,
+    unused_import_braces,
+    unused_lifetimes,
+    unreachable_pub,
+    trivial_numeric_casts,
+    trivial_casts,
+    missing_docs,
+    rustdoc,
+    missing_debug_implementations,
+    missing_copy_implementations,
+    deprecated_in_future,
+    meta_variable_misuse,
+    non_ascii_idents,
+    rust_2018_compatibility,
+    rust_2018_idioms,
+    future_incompatible,
+    nonstandard_style,
+    //warnings
+)]
 
 use bittrex::Client;
 use chrono::*;
 use dotenv::dotenv;
+use std::env;
 
 /// Tests getting all the markets.
 #[test]
@@ -21,7 +44,7 @@ fn it_date_time_parsing() {
     let client = Client::default();
     let markets = client.get_markets().unwrap();
 
-    for market in markets.iter() {
+    for market in markets {
         if market.market_name() == "BTC-LTC" {
             // "2014-02-13T00:00:00"
             let creation = market.created();
@@ -45,7 +68,7 @@ fn it_date_time_parsing() {
             assert_eq!(creation.hour(), 19);
             assert_eq!(creation.minute(), 2);
             assert_eq!(creation.second(), 45);
-            assert_eq!(creation.nanosecond(), 960000000);
+            assert_eq!(creation.nanosecond(), 960_000_000);
         }
     }
 }
