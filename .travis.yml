@@ -21,7 +21,7 @@ addons:
 
 # Run builds for all the supported trains
 rust:
-- 1.31.1
+- 1.39.0
 - stable
 - beta
 - nightly
