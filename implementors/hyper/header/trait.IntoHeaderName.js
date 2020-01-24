@@ -6,5 +6,4 @@ implementors["hyper"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

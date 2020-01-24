@@ -6,5 +6,4 @@ implementors["reqwest"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

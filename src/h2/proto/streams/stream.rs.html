@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/h2-0.1.14/src/proto/streams/stream.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>stream.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/h2-0.2.1/src/proto/streams/stream.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>stream.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../../light.css" id="themeStyle"><script src="../../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../../h2/index.html'><div class='logo-container'><img src='../../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../../settings.html"><img src="../../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -451,9 +451,33 @@
 <span id="451">451</span>
 <span id="452">452</span>
 <span id="453">453</span>
-</pre><pre class="rust ">
+<span id="454">454</span>
+<span id="455">455</span>
+<span id="456">456</span>
+<span id="457">457</span>
+<span id="458">458</span>
+<span id="459">459</span>
+<span id="460">460</span>
+<span id="461">461</span>
+<span id="462">462</span>
+<span id="463">463</span>
+<span id="464">464</span>
+<span id="465">465</span>
+<span id="466">466</span>
+<span id="467">467</span>
+<span id="468">468</span>
+<span id="469">469</span>
+<span id="470">470</span>
+<span id="471">471</span>
+<span id="472">472</span>
+<span id="473">473</span>
+<span id="474">474</span>
+<span id="475">475</span>
+<span id="476">476</span>
+</pre><div class="example-wrap"><pre class="rust ">
 <span class="kw">use</span> <span class="kw">super</span>::<span class="kw-2">*</span>;
 
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">task</span>::{<span class="ident">Context</span>, <span class="ident">Waker</span>};
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">time</span>::<span class="ident">Instant</span>;
 <span class="kw">use</span> <span class="ident">std</span>::<span class="ident">usize</span>;
 
@@ -501,7 +525,7 @@
     <span class="kw">pub</span> <span class="ident">buffered_send_data</span>: <span class="ident">WindowSize</span>,
 
     <span class="doccomment">/// Task tracking additional send capacity (i.e. window updates).</span>
-    <span class="ident">send_task</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">task</span>::<span class="ident">Task</span><span class="op">&gt;</span>,
+    <span class="ident">send_task</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Waker</span><span class="op">&gt;</span>,
 
     <span class="doccomment">/// Frames pending for this stream being sent to the socket</span>
     <span class="kw">pub</span> <span class="ident">pending_send</span>: <span class="ident">buffer</span>::<span class="ident">Deque</span>,
@@ -521,6 +545,9 @@
 
     <span class="doccomment">/// Set to true when the stream is pending to be opened</span>
     <span class="kw">pub</span> <span class="ident">is_pending_open</span>: <span class="ident">bool</span>,
+
+    <span class="doccomment">/// Set to true when a push is pending for this stream</span>
+    <span class="kw">pub</span> <span class="ident">is_pending_push</span>: <span class="ident">bool</span>,
 
     <span class="comment">// ===== Fields related to receiving =====</span>
     <span class="doccomment">/// Next node in the accept linked list</span>
@@ -550,7 +577,7 @@
     <span class="kw">pub</span> <span class="ident">pending_recv</span>: <span class="ident">buffer</span>::<span class="ident">Deque</span>,
 
     <span class="doccomment">/// Task tracking receiving frames</span>
-    <span class="kw">pub</span> <span class="ident">recv_task</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">task</span>::<span class="ident">Task</span><span class="op">&gt;</span>,
+    <span class="kw">pub</span> <span class="ident">recv_task</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Waker</span><span class="op">&gt;</span>,
 
     <span class="doccomment">/// The stream&#39;s pending push promises</span>
     <span class="kw">pub</span> <span class="ident">pending_push_promises</span>: <span class="ident">store</span>::<span class="ident">Queue</span><span class="op">&lt;</span><span class="ident">NextAccept</span><span class="op">&gt;</span>,
@@ -586,23 +613,17 @@
 <span class="kw">pub</span>(<span class="kw">super</span>) <span class="kw">struct</span> <span class="ident">NextResetExpire</span>;
 
 <span class="kw">impl</span> <span class="ident">Stream</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(
-        <span class="ident">id</span>: <span class="ident">StreamId</span>,
-        <span class="ident">init_send_window</span>: <span class="ident">WindowSize</span>,
-        <span class="ident">init_recv_window</span>: <span class="ident">WindowSize</span>,
-    ) <span class="op">-&gt;</span> <span class="ident">Stream</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>(<span class="ident">id</span>: <span class="ident">StreamId</span>, <span class="ident">init_send_window</span>: <span class="ident">WindowSize</span>, <span class="ident">init_recv_window</span>: <span class="ident">WindowSize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">Stream</span> {
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">send_flow</span> <span class="op">=</span> <span class="ident">FlowControl</span>::<span class="ident">new</span>();
         <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">recv_flow</span> <span class="op">=</span> <span class="ident">FlowControl</span>::<span class="ident">new</span>();
 
         <span class="ident">recv_flow</span>
             .<span class="ident">inc_window</span>(<span class="ident">init_recv_window</span>)
-            .<span class="ident">ok</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;invalid initial receive window&quot;</span>);
         <span class="ident">recv_flow</span>.<span class="ident">assign_capacity</span>(<span class="ident">init_recv_window</span>);
 
         <span class="ident">send_flow</span>
             .<span class="ident">inc_window</span>(<span class="ident">init_send_window</span>)
-            .<span class="ident">ok</span>()
             .<span class="ident">expect</span>(<span class="string">&quot;invalid initial send window size&quot;</span>);
 
         <span class="ident">Stream</span> {
@@ -614,7 +635,7 @@
             <span class="comment">// ===== Fields related to sending =====</span>
             <span class="ident">next_pending_send</span>: <span class="prelude-val">None</span>,
             <span class="ident">is_pending_send</span>: <span class="bool-val">false</span>,
-            <span class="ident">send_flow</span>: <span class="ident">send_flow</span>,
+            <span class="ident">send_flow</span>,
             <span class="ident">requested_send_capacity</span>: <span class="number">0</span>,
             <span class="ident">buffered_send_data</span>: <span class="number">0</span>,
             <span class="ident">send_task</span>: <span class="prelude-val">None</span>,
@@ -624,11 +645,12 @@
             <span class="ident">send_capacity_inc</span>: <span class="bool-val">false</span>,
             <span class="ident">is_pending_open</span>: <span class="bool-val">false</span>,
             <span class="ident">next_open</span>: <span class="prelude-val">None</span>,
+            <span class="ident">is_pending_push</span>: <span class="bool-val">false</span>,
 
             <span class="comment">// ===== Fields related to receiving =====</span>
             <span class="ident">next_pending_accept</span>: <span class="prelude-val">None</span>,
             <span class="ident">is_pending_accept</span>: <span class="bool-val">false</span>,
-            <span class="ident">recv_flow</span>: <span class="ident">recv_flow</span>,
+            <span class="ident">recv_flow</span>,
             <span class="ident">in_flight_recv_data</span>: <span class="number">0</span>,
             <span class="ident">next_window_update</span>: <span class="prelude-val">None</span>,
             <span class="ident">is_pending_window_update</span>: <span class="bool-val">false</span>,
@@ -644,46 +666,66 @@
     <span class="doccomment">/// Increment the stream&#39;s ref count</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ref_inc</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">&lt;</span> <span class="ident">usize</span>::<span class="ident">MAX</span>);
-        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">+=</span> <span class="number">1</span>;
+        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">+</span><span class="op">=</span> <span class="number">1</span>;
     }
 
     <span class="doccomment">/// Decrements the stream&#39;s ref count</span>
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ref_dec</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="macro">assert</span><span class="macro">!</span>(<span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">&gt;</span> <span class="number">0</span>);
-        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">-=</span> <span class="number">1</span>;
+        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">-</span><span class="op">=</span> <span class="number">1</span>;
     }
 
     <span class="doccomment">/// Returns true if stream is currently being held for some time because of</span>
     <span class="doccomment">/// a local reset.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_pending_reset_expiration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_pending_reset_expiration</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="self">self</span>.<span class="ident">reset_at</span>.<span class="ident">is_some</span>()
     }
 
+    <span class="doccomment">/// Returns true if frames for this stream are ready to be sent over the wire</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_send_ready</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="comment">// Why do we check pending_open?</span>
+        <span class="comment">//</span>
+        <span class="comment">// We allow users to call send_request() which schedules a stream to be pending_open</span>
+        <span class="comment">// if there is no room according to the concurrency limit (max_send_streams), and we</span>
+        <span class="comment">// also allow data to be buffered for send with send_data() if there is no capacity for</span>
+        <span class="comment">// the stream to send the data, which attempts to place the stream in pending_send.</span>
+        <span class="comment">// If the stream is not open, we don&#39;t want the stream to be scheduled for</span>
+        <span class="comment">// execution (pending_send). Note that if the stream is in pending_open, it will be</span>
+        <span class="comment">// pushed to pending_send when there is room for an open stream.</span>
+        <span class="comment">//</span>
+        <span class="comment">// In pending_push we track whether a PushPromise still needs to be sent</span>
+        <span class="comment">// from a different stream before we can start sending frames on this one.</span>
+        <span class="comment">// This is different from the &quot;open&quot; check because reserved streams don&#39;t count</span>
+        <span class="comment">// toward the concurrency limit.</span>
+        <span class="comment">// See https://httpwg.org/specs/rfc7540.html#rfc.section.5.1.2</span>
+        <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_open</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_push</span>
+    }
+
     <span class="doccomment">/// Returns true if the stream is closed</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_closed</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// The state has fully transitioned to closed.</span>
-        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">is_closed</span>() <span class="op">&amp;&amp;</span>
+        <span class="self">self</span>.<span class="ident">state</span>.<span class="ident">is_closed</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span>
             <span class="comment">// Because outbound frames transition the stream state before being</span>
             <span class="comment">// buffered, we have to ensure that all frames have been flushed.</span>
-            <span class="self">self</span>.<span class="ident">pending_send</span>.<span class="ident">is_empty</span>() <span class="op">&amp;&amp;</span>
+            <span class="self">self</span>.<span class="ident">pending_send</span>.<span class="ident">is_empty</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span>
             <span class="comment">// Sometimes large data frames are sent out in chunks. After a chunk</span>
             <span class="comment">// of the frame is sent, the remainder is pushed back onto the send</span>
             <span class="comment">// queue to be rescheduled.</span>
             <span class="comment">//</span>
             <span class="comment">// Checking for additional buffered data lets us catch this case.</span>
-            <span class="self">self</span>.<span class="ident">buffered_send_data</span> <span class="op">==</span> <span class="number">0</span>
+            <span class="self">self</span>.<span class="ident">buffered_send_data</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span>
     }
 
     <span class="doccomment">/// Returns true if the stream is no longer in use</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_released</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="comment">// The stream is closed and fully flushed</span>
-        <span class="self">self</span>.<span class="ident">is_closed</span>() <span class="op">&amp;&amp;</span>
+        <span class="self">self</span>.<span class="ident">is_closed</span>() <span class="kw-2">&amp;</span><span class="op">&amp;</span>
             <span class="comment">// There are no more outstanding references to the stream</span>
-            <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span>
+            <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
             <span class="comment">// The stream is not in any queue</span>
-            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_send</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_send_capacity</span> <span class="op">&amp;&amp;</span>
-            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_accept</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_window_update</span> <span class="op">&amp;&amp;</span>
-            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_open</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">reset_at</span>.<span class="ident">is_some</span>()
+            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_send</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_send_capacity</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
+            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_accept</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_window_update</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span>
+            <span class="op">!</span><span class="self">self</span>.<span class="ident">is_pending_open</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">reset_at</span>.<span class="ident">is_some</span>()
     }
 
     <span class="doccomment">/// Returns true when the consumer of the stream has dropped all handles</span>
@@ -691,8 +733,8 @@
     <span class="doccomment">/// not actually closed.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// In this case, a reset should be sent.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_canceled_interest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
-        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">==</span> <span class="number">0</span> <span class="op">&amp;&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">is_closed</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_canceled_interest</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
+        <span class="self">self</span>.<span class="ident">ref_count</span> <span class="op">=</span><span class="op">=</span> <span class="number">0</span> <span class="kw-2">&amp;</span><span class="op">&amp;</span> <span class="op">!</span><span class="self">self</span>.<span class="ident">state</span>.<span class="ident">is_closed</span>()
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">assign_capacity</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">capacity</span>: <span class="ident">WindowSize</span>) {
@@ -700,57 +742,61 @@
         <span class="self">self</span>.<span class="ident">send_capacity_inc</span> <span class="op">=</span> <span class="bool-val">true</span>;
         <span class="self">self</span>.<span class="ident">send_flow</span>.<span class="ident">assign_capacity</span>(<span class="ident">capacity</span>);
 
-        <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;  assigned capacity to stream; available={}; buffered={}; id={:?}&quot;</span>,
-               <span class="self">self</span>.<span class="ident">send_flow</span>.<span class="ident">available</span>(), <span class="self">self</span>.<span class="ident">buffered_send_data</span>, <span class="self">self</span>.<span class="ident">id</span>);
+        <span class="ident">log</span>::<span class="macro">trace</span><span class="macro">!</span>(
+            <span class="string">&quot;  assigned capacity to stream; available={}; buffered={}; id={:?}&quot;</span>,
+            <span class="self">self</span>.<span class="ident">send_flow</span>.<span class="ident">available</span>(),
+            <span class="self">self</span>.<span class="ident">buffered_send_data</span>,
+            <span class="self">self</span>.<span class="ident">id</span>
+        );
 
         <span class="comment">// Only notify if the capacity exceeds the amount of buffered data</span>
         <span class="kw">if</span> <span class="self">self</span>.<span class="ident">send_flow</span>.<span class="ident">available</span>() <span class="op">&gt;</span> <span class="self">self</span>.<span class="ident">buffered_send_data</span> {
-            <span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;  notifying task&quot;</span>);
+            <span class="ident">log</span>::<span class="macro">trace</span><span class="macro">!</span>(<span class="string">&quot;  notifying task&quot;</span>);
             <span class="self">self</span>.<span class="ident">notify_send</span>();
         }
     }
 
     <span class="doccomment">/// Returns `Err` when the decrement cannot be completed due to overflow.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dec_content_length</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">dec_content_length</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">len</span>: <span class="ident">usize</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">content_length</span> {
-            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">rem</span>) <span class="op">=&gt;</span> <span class="kw">match</span> <span class="ident">rem</span>.<span class="ident">checked_sub</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">u64</span>) {
-                <span class="prelude-val">Some</span>(<span class="ident">val</span>) <span class="op">=&gt;</span> <span class="kw-2">*</span><span class="ident">rem</span> <span class="op">=</span> <span class="ident">val</span>,
-                <span class="prelude-val">None</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
+            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="kw-2">ref</span> <span class="kw-2">mut</span> <span class="ident">rem</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw">match</span> <span class="ident">rem</span>.<span class="ident">checked_sub</span>(<span class="ident">len</span> <span class="kw">as</span> <span class="ident">u64</span>) {
+                <span class="prelude-val">Some</span>(<span class="ident">val</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="kw-2">*</span><span class="ident">rem</span> <span class="op">=</span> <span class="ident">val</span>,
+                <span class="prelude-val">None</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
             },
-            <span class="ident">ContentLength</span>::<span class="ident">Head</span> <span class="op">=&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
-            <span class="kw">_</span> <span class="op">=&gt;</span> {},
+            <span class="ident">ContentLength</span>::<span class="ident">Head</span> <span class="op">=</span><span class="op">&gt;</span> <span class="kw">return</span> <span class="prelude-val">Err</span>(()),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> {}
         }
 
         <span class="prelude-val">Ok</span>(())
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ensure_content_length_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">ensure_content_length_zero</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span>(), ()<span class="op">&gt;</span> {
         <span class="kw">match</span> <span class="self">self</span>.<span class="ident">content_length</span> {
-            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="number">0</span>) <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
-            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="kw">_</span>) <span class="op">=&gt;</span> <span class="prelude-val">Err</span>(()),
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="number">0</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
+            <span class="ident">ContentLength</span>::<span class="ident">Remaining</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Err</span>(()),
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="prelude-val">Ok</span>(()),
         }
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">task</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">send_task</span>.<span class="ident">take</span>() {
-            <span class="ident">task</span>.<span class="ident">notify</span>();
+            <span class="ident">task</span>.<span class="ident">wake</span>();
         }
     }
 
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait_send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="self">self</span>.<span class="ident">send_task</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">task</span>::<span class="ident">current</span>());
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">wait_send</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">cx</span>: <span class="kw-2">&amp;</span><span class="ident">Context</span>) {
+        <span class="self">self</span>.<span class="ident">send_task</span> <span class="op">=</span> <span class="prelude-val">Some</span>(<span class="ident">cx</span>.<span class="ident">waker</span>().<span class="ident">clone</span>());
     }
 
     <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">notify_recv</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
         <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">task</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">recv_task</span>.<span class="ident">take</span>() {
-            <span class="ident">task</span>.<span class="ident">notify</span>();
+            <span class="ident">task</span>.<span class="ident">wake</span>();
         }
     }
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextAccept</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_accept</span>
     }
 
@@ -758,11 +804,11 @@
         <span class="ident">stream</span>.<span class="ident">next_pending_accept</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_accept</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">is_pending_accept</span>
     }
 
@@ -772,7 +818,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextSend</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_send</span>
     }
 
@@ -780,11 +826,11 @@
         <span class="ident">stream</span>.<span class="ident">next_pending_send</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_send</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">is_pending_send</span>
     }
 
@@ -799,7 +845,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextSendCapacity</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_send_capacity</span>
     }
 
@@ -807,11 +853,11 @@
         <span class="ident">stream</span>.<span class="ident">next_pending_send_capacity</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_pending_send_capacity</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">is_pending_send_capacity</span>
     }
 
@@ -821,7 +867,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextWindowUpdate</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_window_update</span>
     }
 
@@ -829,11 +875,11 @@
         <span class="ident">stream</span>.<span class="ident">next_window_update</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_window_update</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">is_pending_window_update</span>
     }
 
@@ -843,7 +889,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextOpen</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_open</span>
     }
 
@@ -851,11 +897,11 @@
         <span class="ident">stream</span>.<span class="ident">next_open</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_open</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">is_pending_open</span>
     }
 
@@ -870,7 +916,7 @@
 }
 
 <span class="kw">impl</span> <span class="ident">store</span>::<span class="ident">Next</span> <span class="kw">for</span> <span class="ident">NextResetExpire</span> {
-    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_reset_expire</span>
     }
 
@@ -878,11 +924,11 @@
         <span class="ident">stream</span>.<span class="ident">next_reset_expire</span> <span class="op">=</span> <span class="ident">key</span>;
     }
 
-    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
+    <span class="kw">fn</span> <span class="ident">take_next</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">store</span>::<span class="ident">Key</span><span class="op">&gt;</span> {
         <span class="ident">stream</span>.<span class="ident">next_reset_expire</span>.<span class="ident">take</span>()
     }
 
-    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">fn</span> <span class="ident">is_queued</span>(<span class="ident">stream</span>: <span class="kw-2">&amp;</span><span class="ident">Stream</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="ident">stream</span>.<span class="ident">reset_at</span>.<span class="ident">is_some</span>()
     }
 
@@ -898,12 +944,12 @@
 <span class="comment">// ===== impl ContentLength =====</span>
 
 <span class="kw">impl</span> <span class="ident">ContentLength</span> {
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_head</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">bool</span> {
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">is_head</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">bool</span> {
         <span class="kw">match</span> <span class="kw-2">*</span><span class="self">self</span> {
-            <span class="ident">ContentLength</span>::<span class="ident">Head</span> <span class="op">=&gt;</span> <span class="bool-val">true</span>,
-            <span class="kw">_</span> <span class="op">=&gt;</span> <span class="bool-val">false</span>,
+            <span class="ident">ContentLength</span>::<span class="ident">Head</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">true</span>,
+            <span class="kw">_</span> <span class="op">=</span><span class="op">&gt;</span> <span class="bool-val">false</span>,
         }
     }
 }
-</pre>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../../";window.currentCrate = "h2";</script><script src="../../../../aliases.js"></script><script src="../../../../main.js"></script><script defer src="../../../../search-index.js"></script></body></html>
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../../";window.currentCrate = "h2";</script><script src="../../../../aliases.js"></script><script src="../../../../main.js"></script><script src="../../../../source-script.js"></script><script src="../../../../source-files.js"></script><script defer src="../../../../search-index.js"></script></body></html>

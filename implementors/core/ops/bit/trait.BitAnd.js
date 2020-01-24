@@ -11,5 +11,4 @@ implementors["typenum"] = [{text:"impl&lt;Rhs:&nbsp;<a class=\"trait\" href=\"ty
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

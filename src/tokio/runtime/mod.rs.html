@@ -1,4 +1,4 @@
-<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-0.1.13/src/runtime/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta name="generator" content="rustdoc"><meta name="description" content="Source to the Rust file `/home/travis/.cargo/registry/src/github.com-1ecc6299db9ec823/tokio-0.2.10/src/runtime/mod.rs`."><meta name="keywords" content="rust, rustlang, rust-lang"><title>mod.rs.html -- source</title><link rel="stylesheet" type="text/css" href="../../../normalize.css"><link rel="stylesheet" type="text/css" href="../../../rustdoc.css" id="mainThemeStyle"><link rel="stylesheet" type="text/css" href="../../../dark.css"><link rel="stylesheet" type="text/css" href="../../../light.css" id="themeStyle"><script src="../../../storage.js"></script><noscript><link rel="stylesheet" href="../../../noscript.css"></noscript><link rel="shortcut icon" href="../../../favicon.ico"><style type="text/css">#crate-search{background-image:url("../../../down-arrow.svg");}</style></head><body class="rustdoc source"><!--[if lte IE 8]><div class="warning">This old browser is unsupported and will most likely display funky things.</div><![endif]--><nav class="sidebar"><div class="sidebar-menu">&#9776;</div><a href='../../../tokio/index.html'><div class='logo-container'><img src='../../../rust-logo.png' alt='logo'></div></a></nav><div class="theme-picker"><button id="theme-picker" aria-label="Pick another theme!"><img src="../../../brush.svg" width="18" alt="Pick another theme!"></button><div id="theme-choices"></div></div><script src="../../../theme.js"></script><nav class="sub"><form class="search-form js-only"><div class="search-container"><div><select id="crate-search"><option value="All crates">All crates</option></select><input class="search-input" name="search" autocomplete="off" spellcheck="false" placeholder="Click or press ‘S’ to search, ‘?’ for more options…" type="search"></div><a id="settings-menu" href="../../../settings.html"><img src="../../../wheel.svg" width="18" alt="Change settings"></a></div></form></nav><section id="main" class="content"><pre class="line-numbers"><span id="1">  1</span>
 <span id="2">  2</span>
 <span id="3">  3</span>
 <span id="4">  4</span>
@@ -442,136 +442,64 @@
 <span id="442">442</span>
 <span id="443">443</span>
 <span id="444">444</span>
-<span id="445">445</span>
-<span id="446">446</span>
-<span id="447">447</span>
-<span id="448">448</span>
-<span id="449">449</span>
-<span id="450">450</span>
-<span id="451">451</span>
-<span id="452">452</span>
-<span id="453">453</span>
-<span id="454">454</span>
-<span id="455">455</span>
-<span id="456">456</span>
-<span id="457">457</span>
-<span id="458">458</span>
-<span id="459">459</span>
-<span id="460">460</span>
-<span id="461">461</span>
-<span id="462">462</span>
-<span id="463">463</span>
-<span id="464">464</span>
-<span id="465">465</span>
-<span id="466">466</span>
-<span id="467">467</span>
-<span id="468">468</span>
-<span id="469">469</span>
-<span id="470">470</span>
-<span id="471">471</span>
-<span id="472">472</span>
-<span id="473">473</span>
-<span id="474">474</span>
-<span id="475">475</span>
-<span id="476">476</span>
-<span id="477">477</span>
-<span id="478">478</span>
-<span id="479">479</span>
-<span id="480">480</span>
-<span id="481">481</span>
-<span id="482">482</span>
-<span id="483">483</span>
-<span id="484">484</span>
-<span id="485">485</span>
-<span id="486">486</span>
-<span id="487">487</span>
-<span id="488">488</span>
-<span id="489">489</span>
-<span id="490">490</span>
-<span id="491">491</span>
-<span id="492">492</span>
-<span id="493">493</span>
-<span id="494">494</span>
-<span id="495">495</span>
-<span id="496">496</span>
-<span id="497">497</span>
-<span id="498">498</span>
-<span id="499">499</span>
-<span id="500">500</span>
-<span id="501">501</span>
-<span id="502">502</span>
-<span id="503">503</span>
-<span id="504">504</span>
-<span id="505">505</span>
-<span id="506">506</span>
-<span id="507">507</span>
-<span id="508">508</span>
-<span id="509">509</span>
-<span id="510">510</span>
-</pre><pre class="rust ">
-<span class="doccomment">//! A batteries included runtime for applications using Tokio.</span>
+</pre><div class="example-wrap"><pre class="rust ">
+<span class="doccomment">//! The Tokio runtime.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Applications using Tokio require some runtime support in order to work:</span>
+<span class="doccomment">//! Unlike other Rust programs, asynchronous applications require</span>
+<span class="doccomment">//! runtime support. In particular, the following runtime services are</span>
+<span class="doccomment">//! necessary:</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! * A [reactor] to drive I/O resources.</span>
-<span class="doccomment">//! * An [executor] to execute tasks that use these I/O resources.</span>
-<span class="doccomment">//! * A [timer] for scheduling work to run after a set period of time.</span>
+<span class="doccomment">//! * An **I/O event loop**, called the driver, which drives I/O resources and</span>
+<span class="doccomment">//!   dispatches I/O events to tasks that depend on them.</span>
+<span class="doccomment">//! * A **scheduler** to execute [tasks] that use these I/O resources.</span>
+<span class="doccomment">//! * A **timer** for scheduling work to run after a set period of time.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! While it is possible to setup each component manually, this involves a bunch</span>
-<span class="doccomment">//! of boilerplate.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! [`Runtime`] bundles all of these various runtime components into a single</span>
-<span class="doccomment">//! handle that can be started and shutdown together, eliminating the necessary</span>
-<span class="doccomment">//! boilerplate to run a Tokio application.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Most applications wont need to use [`Runtime`] directly. Instead, they will</span>
-<span class="doccomment">//! use the [`run`] function, which uses [`Runtime`] under the hood.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! Creating a [`Runtime`] does the following:</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! * Spawn a background thread running a [`Reactor`] instance.</span>
-<span class="doccomment">//! * Start a [`ThreadPool`] for executing futures.</span>
-<span class="doccomment">//! * Run an instance of [`Timer`] **per** thread pool worker thread.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! The thread pool uses a work-stealing strategy and is configured to start a</span>
-<span class="doccomment">//! worker thread for each CPU core available on the system. This tends to be</span>
-<span class="doccomment">//! the ideal setup for Tokio applications.</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! A timer per thread pool worker thread is used to minimize the amount of</span>
-<span class="doccomment">//! synchronization that is required for working with the timer.</span>
+<span class="doccomment">//! Tokio&#39;s [`Runtime`] bundles all of these services as a single type, allowing</span>
+<span class="doccomment">//! them to be started, shut down, and configured together. However, most</span>
+<span class="doccomment">//! applications won&#39;t need to use [`Runtime`] directly. Instead, they can</span>
+<span class="doccomment">//! use the [`tokio::main`] attribute macro, which creates a [`Runtime`] under</span>
+<span class="doccomment">//! the hood.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! # Usage</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! Most applications will use the [`run`] function. This takes a future to</span>
-<span class="doccomment">//! &quot;seed&quot; the application, blocking the thread until the runtime becomes</span>
-<span class="doccomment">//! [idle].</span>
+<span class="doccomment">//! Most applications will use the [`tokio::main`] attribute macro.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! # extern crate tokio;</span>
-<span class="doccomment">//! # extern crate futures;</span>
-<span class="doccomment">//! # use futures::{Future, Stream};</span>
+<span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use tokio::net::TcpListener;</span>
+<span class="doccomment">//! use tokio::prelude::*;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn process&lt;T&gt;(_: T) -&gt; Box&lt;Future&lt;Item = (), Error = ()&gt; + Send&gt; {</span>
-<span class="doccomment">//! # unimplemented!();</span>
-<span class="doccomment">//! # }</span>
-<span class="doccomment">//! # fn dox() {</span>
-<span class="doccomment">//! # let addr = &quot;127.0.0.1:8080&quot;.parse().unwrap();</span>
-<span class="doccomment">//! let listener = TcpListener::bind(&amp;addr).unwrap();</span>
+<span class="doccomment">//! #[tokio::main]</span>
+<span class="doccomment">//! async fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
+<span class="doccomment">//!     let mut listener = TcpListener::bind(&quot;127.0.0.1:8080&quot;).await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! let server = listener.incoming()</span>
-<span class="doccomment">//!     .map_err(|e| println!(&quot;error = {:?}&quot;, e))</span>
-<span class="doccomment">//!     .for_each(|socket| {</span>
-<span class="doccomment">//!         tokio::spawn(process(socket))</span>
-<span class="doccomment">//!     });</span>
+<span class="doccomment">//!     loop {</span>
+<span class="doccomment">//!         let (mut socket, _) = listener.accept().await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! tokio::run(server);</span>
-<span class="doccomment">//! # }</span>
-<span class="doccomment">//! # pub fn main() {}</span>
+<span class="doccomment">//!         tokio::spawn(async move {</span>
+<span class="doccomment">//!             let mut buf = [0; 1024];</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!             // In a loop, read data from the socket and write the data back.</span>
+<span class="doccomment">//!             loop {</span>
+<span class="doccomment">//!                 let n = match socket.read(&amp;mut buf).await {</span>
+<span class="doccomment">//!                     // socket closed</span>
+<span class="doccomment">//!                     Ok(n) if n == 0 =&gt; return,</span>
+<span class="doccomment">//!                     Ok(n) =&gt; n,</span>
+<span class="doccomment">//!                     Err(e) =&gt; {</span>
+<span class="doccomment">//!                         println!(&quot;failed to read from socket; err = {:?}&quot;, e);</span>
+<span class="doccomment">//!                         return;</span>
+<span class="doccomment">//!                     }</span>
+<span class="doccomment">//!                 };</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!                 // Write the data back</span>
+<span class="doccomment">//!                 if let Err(e) = socket.write_all(&amp;buf[0..n]).await {</span>
+<span class="doccomment">//!                     println!(&quot;failed to write to socket; err = {:?}&quot;, e);</span>
+<span class="doccomment">//!                     return;</span>
+<span class="doccomment">//!                 }</span>
+<span class="doccomment">//!             }</span>
+<span class="doccomment">//!         });</span>
+<span class="doccomment">//!     }</span>
+<span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
-<span class="doccomment">//!</span>
-<span class="doccomment">//! In this function, the `run` function blocks until the runtime becomes idle.</span>
-<span class="doccomment">//! See [`shutdown_on_idle`][idle] for more shutdown details.</span>
 <span class="doccomment">//!</span>
 <span class="doccomment">//! From within the context of the runtime, additional tasks are spawned using</span>
 <span class="doccomment">//! the [`tokio::spawn`] function. Futures spawned using this function will be</span>
@@ -579,169 +507,255 @@
 <span class="doccomment">//!</span>
 <span class="doccomment">//! A [`Runtime`] instance can also be used directly.</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! ```rust</span>
-<span class="doccomment">//! # extern crate tokio;</span>
-<span class="doccomment">//! # extern crate futures;</span>
-<span class="doccomment">//! # use futures::{Future, Stream};</span>
-<span class="doccomment">//! use tokio::runtime::Runtime;</span>
+<span class="doccomment">//! ```no_run</span>
 <span class="doccomment">//! use tokio::net::TcpListener;</span>
+<span class="doccomment">//! use tokio::prelude::*;</span>
+<span class="doccomment">//! use tokio::runtime::Runtime;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! # fn process&lt;T&gt;(_: T) -&gt; Box&lt;Future&lt;Item = (), Error = ()&gt; + Send&gt; {</span>
-<span class="doccomment">//! # unimplemented!();</span>
-<span class="doccomment">//! # }</span>
-<span class="doccomment">//! # fn dox() {</span>
-<span class="doccomment">//! # let addr = &quot;127.0.0.1:8080&quot;.parse().unwrap();</span>
-<span class="doccomment">//! let listener = TcpListener::bind(&amp;addr).unwrap();</span>
+<span class="doccomment">//! fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
+<span class="doccomment">//!     // Create the runtime</span>
+<span class="doccomment">//!     let mut rt = Runtime::new()?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! let server = listener.incoming()</span>
-<span class="doccomment">//!     .map_err(|e| println!(&quot;error = {:?}&quot;, e))</span>
-<span class="doccomment">//!     .for_each(|socket| {</span>
-<span class="doccomment">//!         tokio::spawn(process(socket))</span>
-<span class="doccomment">//!     });</span>
+<span class="doccomment">//!     // Spawn the root task</span>
+<span class="doccomment">//!     rt.block_on(async {</span>
+<span class="doccomment">//!         let mut listener = TcpListener::bind(&quot;127.0.0.1:8080&quot;).await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! // Create the runtime</span>
-<span class="doccomment">//! let mut rt = Runtime::new().unwrap();</span>
+<span class="doccomment">//!         loop {</span>
+<span class="doccomment">//!             let (mut socket, _) = listener.accept().await?;</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! // Spawn the server task</span>
-<span class="doccomment">//! rt.spawn(server);</span>
+<span class="doccomment">//!             tokio::spawn(async move {</span>
+<span class="doccomment">//!                 let mut buf = [0; 1024];</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! // Wait until the runtime becomes idle and shut it down.</span>
-<span class="doccomment">//! rt.shutdown_on_idle()</span>
-<span class="doccomment">//!     .wait().unwrap();</span>
-<span class="doccomment">//! # }</span>
-<span class="doccomment">//! # pub fn main() {}</span>
+<span class="doccomment">//!                 // In a loop, read data from the socket and write the data back.</span>
+<span class="doccomment">//!                 loop {</span>
+<span class="doccomment">//!                     let n = match socket.read(&amp;mut buf).await {</span>
+<span class="doccomment">//!                         // socket closed</span>
+<span class="doccomment">//!                         Ok(n) if n == 0 =&gt; return,</span>
+<span class="doccomment">//!                         Ok(n) =&gt; n,</span>
+<span class="doccomment">//!                         Err(e) =&gt; {</span>
+<span class="doccomment">//!                             println!(&quot;failed to read from socket; err = {:?}&quot;, e);</span>
+<span class="doccomment">//!                             return;</span>
+<span class="doccomment">//!                         }</span>
+<span class="doccomment">//!                     };</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//!                     // Write the data back</span>
+<span class="doccomment">//!                     if let Err(e) = socket.write_all(&amp;buf[0..n]).await {</span>
+<span class="doccomment">//!                         println!(&quot;failed to write to socket; err = {:?}&quot;, e);</span>
+<span class="doccomment">//!                         return;</span>
+<span class="doccomment">//!                     }</span>
+<span class="doccomment">//!                 }</span>
+<span class="doccomment">//!             });</span>
+<span class="doccomment">//!         }</span>
+<span class="doccomment">//!     })</span>
+<span class="doccomment">//! }</span>
 <span class="doccomment">//! ```</span>
 <span class="doccomment">//!</span>
-<span class="doccomment">//! [reactor]: ../reactor/struct.Reactor.html</span>
-<span class="doccomment">//! [executor]: https://tokio.rs/docs/getting-started/runtime-model/#executors</span>
-<span class="doccomment">//! [timer]: ../timer/index.html</span>
-<span class="doccomment">//! [`Runtime`]: struct.Runtime.html</span>
-<span class="doccomment">//! [`Reactor`]: ../reactor/struct.Reactor.html</span>
-<span class="doccomment">//! [`ThreadPool`]: ../executor/thread_pool/struct.ThreadPool.html</span>
-<span class="doccomment">//! [`run`]: fn.run.html</span>
-<span class="doccomment">//! [idle]: struct.Runtime.html#method.shutdown_on_idle</span>
-<span class="doccomment">//! [`tokio::spawn`]: ../executor/fn.spawn.html</span>
-<span class="doccomment">//! [`Timer`]: https://docs.rs/tokio-timer/0.2/tokio_timer/timer/struct.Timer.html</span>
+<span class="doccomment">//! ## Runtime Configurations</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Tokio provides multiple task scheding strategies, suitable for different</span>
+<span class="doccomment">//! applications. The [runtime builder] or `#[tokio::main]` attribute may be</span>
+<span class="doccomment">//! used to select which scheduler to use.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### Basic Scheduler</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The basic scheduler provides a _single-threaded_ future executor. All tasks</span>
+<span class="doccomment">//! will be created and executed on the current thread. The basic scheduler</span>
+<span class="doccomment">//! requires the `rt-core` feature flag, and can be selected using the</span>
+<span class="doccomment">//! [`Builder::basic_scheduler`] method:</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use tokio::runtime;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
+<span class="doccomment">//! let basic_rt = runtime::Builder::new()</span>
+<span class="doccomment">//!     .basic_scheduler()</span>
+<span class="doccomment">//!     .build()?;</span>
+<span class="doccomment">//! # Ok(()) }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If the `rt-core` feature is enabled and `rt-threaded` is not,</span>
+<span class="doccomment">//! [`Runtime::new`] will return a basic scheduler runtime by default.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### Threaded Scheduler</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The threaded scheduler executes futures on a _thread pool_, using a</span>
+<span class="doccomment">//! work-stealing strategy. By default, it will start a worker thread for each</span>
+<span class="doccomment">//! CPU core available on the system. This tends to be the ideal configurations</span>
+<span class="doccomment">//! for most applications. The threaded scheduler requires the `rt-threaded` feature</span>
+<span class="doccomment">//! flag, and can be selected using the  [`Builder::threaded_scheduler`] method:</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//! use tokio::runtime;</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! # fn main() -&gt; Result&lt;(), Box&lt;dyn std::error::Error&gt;&gt; {</span>
+<span class="doccomment">//! let threaded_rt = runtime::Builder::new()</span>
+<span class="doccomment">//!     .threaded_scheduler()</span>
+<span class="doccomment">//!     .build()?;</span>
+<span class="doccomment">//! # Ok(()) }</span>
+<span class="doccomment">//! ```</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! If the `rt-threaded` feature flag is enabled, [`Runtime::new`] will return a</span>
+<span class="doccomment">//! threaded scheduler runtime by default.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! Most applications should use the threaded scheduler, except in some niche</span>
+<span class="doccomment">//! use-cases, such as when running only a single thread is required.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! #### Resource drivers</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! When configuring a runtime by hand, no resource drivers are enabled by</span>
+<span class="doccomment">//! default. In this case, attempting to use networking types or time types will</span>
+<span class="doccomment">//! fail. In order to enable these types, the resource drivers must be enabled.</span>
+<span class="doccomment">//! This is done with [`Builder::enable_io`] and [`Builder::enable_time`]. As a</span>
+<span class="doccomment">//! shorthand, [`Builder::enable_all`] enables both resource drivers.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! ## Lifetime of spawned threads</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! The runtime may spawn threads depending on its configuration and usage. The</span>
+<span class="doccomment">//! threaded scheduler spawns threads to schedule tasks and calls to</span>
+<span class="doccomment">//! `spawn_blocking` spawn threads to run blocking operations.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! While the `Runtime` is active, threads may shutdown after periods of being</span>
+<span class="doccomment">//! idle. Once `Runtime` is dropped, all runtime threads are forcibly shutdown.</span>
+<span class="doccomment">//! Any tasks that have not yet completed will be dropped.</span>
+<span class="doccomment">//!</span>
+<span class="doccomment">//! [tasks]: crate::task</span>
+<span class="doccomment">//! [`Runtime`]: Runtime</span>
+<span class="doccomment">//! [`tokio::spawn`]: crate::spawn</span>
+<span class="doccomment">//! [`tokio::main`]: ../attr.main.html</span>
+<span class="doccomment">//! [runtime builder]: crate::runtime::Builder</span>
+<span class="doccomment">//! [`Runtime::new`]: crate::runtime::Runtime::new</span>
+<span class="doccomment">//! [`Builder::basic_scheduler`]: crate::runtime::Builder::basic_scheduler</span>
+<span class="doccomment">//! [`Builder::threaded_scheduler`]: crate::runtime::Builder::threaded_scheduler</span>
+<span class="doccomment">//! [`Builder::enable_io`]: crate::runtime::Builder::enable_io</span>
+<span class="doccomment">//! [`Builder::enable_time`]: crate::runtime::Builder::enable_time</span>
+<span class="doccomment">//! [`Builder::enable_all`]: crate::runtime::Builder::enable_all</span>
+
+<span class="comment">// At the top due to macros</span>
+<span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">test</span>)]</span>
+<span class="attribute">#[<span class="ident">macro_use</span>]</span>
+<span class="kw">mod</span> <span class="ident">tests</span>;
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">context</span>;
+
+<span class="macro">cfg_rt_core</span><span class="macro">!</span> {
+    <span class="kw">mod</span> <span class="ident">basic_scheduler</span>;
+    <span class="kw">use</span> <span class="ident">basic_scheduler</span>::<span class="ident">BasicScheduler</span>;
+}
+
+<span class="kw">mod</span> <span class="ident">blocking</span>;
+<span class="kw">use</span> <span class="ident">blocking</span>::<span class="ident">BlockingPool</span>;
+
+<span class="macro">cfg_blocking_impl</span><span class="macro">!</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">use</span> <span class="ident">blocking</span>::<span class="ident">spawn_blocking</span>;
+}
 
 <span class="kw">mod</span> <span class="ident">builder</span>;
-<span class="kw">pub</span> <span class="kw">mod</span> <span class="ident">current_thread</span>;
-<span class="kw">mod</span> <span class="ident">shutdown</span>;
-<span class="kw">mod</span> <span class="ident">task_executor</span>;
-
 <span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">builder</span>::<span class="ident">Builder</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">shutdown</span>::<span class="ident">Shutdown</span>;
-<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">task_executor</span>::<span class="ident">TaskExecutor</span>;
 
-<span class="kw">use</span> <span class="ident">reactor</span>::{<span class="ident">Handle</span>, <span class="ident">Reactor</span>};
+<span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">enter</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">enter</span>::<span class="ident">enter</span>;
 
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">io</span>;
-<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Mutex</span>;
+<span class="kw">mod</span> <span class="ident">handle</span>;
+<span class="kw">pub</span> <span class="kw">use</span> <span class="self">self</span>::<span class="ident">handle</span>::{<span class="ident">Handle</span>, <span class="ident">TryCurrentError</span>};
 
-<span class="kw">use</span> <span class="ident">tokio_executor</span>::<span class="ident">enter</span>;
-<span class="kw">use</span> <span class="ident">tokio_threadpool</span> <span class="kw">as</span> <span class="ident">threadpool</span>;
+<span class="kw">mod</span> <span class="ident">io</span>;
 
-<span class="kw">use</span> <span class="ident">futures</span>;
-<span class="kw">use</span> <span class="ident">futures</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
+<span class="macro">cfg_rt_threaded</span><span class="macro">!</span> {
+    <span class="kw">mod</span> <span class="ident">park</span>;
+    <span class="kw">use</span> <span class="ident">park</span>::{<span class="ident">Parker</span>, <span class="ident">Unparker</span>};
+}
 
-<span class="doccomment">/// Handle to the Tokio runtime.</span>
+<span class="kw">mod</span> <span class="ident">shell</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">shell</span>::<span class="ident">Shell</span>;
+
+<span class="kw">mod</span> <span class="ident">spawner</span>;
+<span class="kw">use</span> <span class="self">self</span>::<span class="ident">spawner</span>::<span class="ident">Spawner</span>;
+
+<span class="kw">mod</span> <span class="ident">time</span>;
+
+<span class="macro">cfg_rt_threaded</span><span class="macro">!</span> {
+    <span class="kw">pub</span>(<span class="kw">crate</span>) <span class="kw">mod</span> <span class="ident">thread_pool</span>;
+    <span class="kw">use</span> <span class="self">self</span>::<span class="ident">thread_pool</span>::<span class="ident">ThreadPool</span>;
+}
+
+<span class="macro">cfg_rt_core</span><span class="macro">!</span> {
+    <span class="kw">use</span> <span class="kw">crate</span>::<span class="ident">task</span>::<span class="ident">JoinHandle</span>;
+}
+
+<span class="kw">use</span> <span class="ident">std</span>::<span class="ident">future</span>::<span class="ident">Future</span>;
+
+<span class="doccomment">/// The Tokio runtime.</span>
 <span class="doccomment">///</span>
-<span class="doccomment">/// The Tokio runtime includes a reactor as well as an executor for running</span>
-<span class="doccomment">/// tasks.</span>
+<span class="doccomment">/// The runtime provides an I/O [driver], task scheduler, [timer], and blocking</span>
+<span class="doccomment">/// pool, necessary for running asynchronous tasks.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// Instances of `Runtime` can be created using [`new`] or [`Builder`]. However,</span>
-<span class="doccomment">/// most users will use [`tokio::run`], which uses a `Runtime` internally.</span>
+<span class="doccomment">/// most users will use the `#[tokio::main]` annotation on their entry point instead.</span>
 <span class="doccomment">///</span>
 <span class="doccomment">/// See [module level][mod] documentation for more details.</span>
 <span class="doccomment">///</span>
+<span class="doccomment">/// # Shutdown</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Shutting down the runtime is done by dropping the value. The current thread</span>
+<span class="doccomment">/// will block until the shut down operation has completed.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// * Drain any scheduled work queues.</span>
+<span class="doccomment">/// * Drop any futures that have not yet completed.</span>
+<span class="doccomment">/// * Drop the reactor.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// Once the reactor has dropped, any outstanding I/O resources bound to</span>
+<span class="doccomment">/// that reactor will no longer function. Calling any method on them will</span>
+<span class="doccomment">/// result in an error.</span>
+<span class="doccomment">///</span>
+<span class="doccomment">/// [driver]: crate::io::driver</span>
+<span class="doccomment">/// [timer]: crate::time</span>
 <span class="doccomment">/// [mod]: index.html</span>
 <span class="doccomment">/// [`new`]: #method.new</span>
 <span class="doccomment">/// [`Builder`]: struct.Builder.html</span>
 <span class="doccomment">/// [`tokio::run`]: fn.run.html</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
 <span class="kw">pub</span> <span class="kw">struct</span> <span class="ident">Runtime</span> {
-    <span class="ident">inner</span>: <span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Inner</span><span class="op">&gt;</span>,
+    <span class="doccomment">/// Task executor</span>
+    <span class="ident">kind</span>: <span class="ident">Kind</span>,
+
+    <span class="doccomment">/// Handle to runtime, also contains driver handles</span>
+    <span class="ident">handle</span>: <span class="ident">Handle</span>,
+
+    <span class="doccomment">/// Blocking pool handle, used to signal shutdown</span>
+    <span class="ident">blocking_pool</span>: <span class="ident">BlockingPool</span>,
 }
 
+<span class="doccomment">/// The runtime executor is either a thread-pool or a current-thread executor.</span>
 <span class="attribute">#[<span class="ident">derive</span>(<span class="ident">Debug</span>)]</span>
-<span class="kw">struct</span> <span class="ident">Inner</span> {
-    <span class="doccomment">/// A handle to the reactor in the background thread.</span>
-    <span class="ident">reactor_handle</span>: <span class="ident">Handle</span>,
+<span class="kw">enum</span> <span class="ident">Kind</span> {
+    <span class="doccomment">/// Not able to execute concurrent tasks. This variant is mostly used to get</span>
+    <span class="doccomment">/// access to the driver handles.</span>
+    <span class="ident">Shell</span>(<span class="ident">Shell</span>),
 
-    <span class="comment">// TODO: This should go away in 0.2</span>
-    <span class="ident">reactor</span>: <span class="ident">Mutex</span><span class="op">&lt;</span><span class="prelude-ty">Option</span><span class="op">&lt;</span><span class="ident">Reactor</span><span class="op">&gt;&gt;</span>,
+    <span class="doccomment">/// Execute all tasks on the current-thread.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-core&quot;</span>)]</span>
+    <span class="ident">Basic</span>(<span class="ident">BasicScheduler</span><span class="op">&lt;</span><span class="ident">time</span>::<span class="ident">Driver</span><span class="op">&gt;</span>),
 
-    <span class="doccomment">/// Task execution pool.</span>
-    <span class="ident">pool</span>: <span class="ident">threadpool</span>::<span class="ident">ThreadPool</span>,
+    <span class="doccomment">/// Execute tasks across multiple threads.</span>
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-threaded&quot;</span>)]</span>
+    <span class="ident">ThreadPool</span>(<span class="ident">ThreadPool</span>),
 }
 
-<span class="comment">// ===== impl Runtime =====</span>
-
-<span class="doccomment">/// Start the Tokio runtime using the supplied future to bootstrap execution.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This function is used to bootstrap the execution of a Tokio application. It</span>
-<span class="doccomment">/// does the following:</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// * Start the Tokio runtime using a default configuration.</span>
-<span class="doccomment">/// * Spawn the given future onto the thread pool.</span>
-<span class="doccomment">/// * Block the current thread until the runtime shuts down.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// Note that the function will not return immediately once `future` has</span>
-<span class="doccomment">/// completed. Instead it waits for the entire runtime to become idle.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// See the [module level][mod] documentation for more details.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Examples</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// ```rust</span>
-<span class="doccomment">/// # extern crate tokio;</span>
-<span class="doccomment">/// # extern crate futures;</span>
-<span class="doccomment">/// # use futures::{Future, Stream};</span>
-<span class="doccomment">/// use tokio::net::TcpListener;</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # fn process&lt;T&gt;(_: T) -&gt; Box&lt;Future&lt;Item = (), Error = ()&gt; + Send&gt; {</span>
-<span class="doccomment">/// # unimplemented!();</span>
-<span class="doccomment">/// # }</span>
-<span class="doccomment">/// # fn dox() {</span>
-<span class="doccomment">/// # let addr = &quot;127.0.0.1:8080&quot;.parse().unwrap();</span>
-<span class="doccomment">/// let listener = TcpListener::bind(&amp;addr).unwrap();</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// let server = listener.incoming()</span>
-<span class="doccomment">///     .map_err(|e| println!(&quot;error = {:?}&quot;, e))</span>
-<span class="doccomment">///     .for_each(|socket| {</span>
-<span class="doccomment">///         tokio::spawn(process(socket))</span>
-<span class="doccomment">///     });</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// tokio::run(server);</span>
-<span class="doccomment">/// # }</span>
-<span class="doccomment">/// # pub fn main() {}</span>
-<span class="doccomment">/// ```</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// # Panics</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// This function panics if called from the context of an executor.</span>
-<span class="doccomment">///</span>
-<span class="doccomment">/// [mod]: ../index.html</span>
-<span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">run</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="ident">future</span>: <span class="ident">F</span>)
-<span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> (), <span class="ident">Error</span> <span class="op">=</span> ()<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-{
-    <span class="comment">// Check enter before creating a new Runtime...</span>
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">entered</span> <span class="op">=</span> <span class="ident">enter</span>().<span class="ident">expect</span>(<span class="string">&quot;nested tokio::run&quot;</span>);
-    <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">runtime</span> <span class="op">=</span> <span class="ident">Runtime</span>::<span class="ident">new</span>().<span class="ident">expect</span>(<span class="string">&quot;failed to start new Runtime&quot;</span>);
-    <span class="ident">runtime</span>.<span class="ident">spawn</span>(<span class="ident">future</span>);
-    <span class="ident">entered</span>
-        .<span class="ident">block_on</span>(<span class="ident">runtime</span>.<span class="ident">shutdown_on_idle</span>())
-        .<span class="ident">expect</span>(<span class="string">&quot;shutdown cannot error&quot;</span>)
-}
+<span class="doccomment">/// After thread starts / before thread stops</span>
+<span class="kw">type</span> <span class="ident">Callback</span> <span class="op">=</span> <span class="ident">std</span>::<span class="ident">sync</span>::<span class="ident">Arc</span><span class="op">&lt;</span><span class="kw">dyn</span> <span class="ident">Fn</span>() <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="ident">Sync</span><span class="op">&gt;</span>;
 
 <span class="kw">impl</span> <span class="ident">Runtime</span> {
     <span class="doccomment">/// Create a new runtime instance with default configuration values.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// This results in a reactor, thread pool, and timer being initialized. The</span>
-    <span class="doccomment">/// thread pool will not spawn any worker threads until it needs to, i.e.</span>
-    <span class="doccomment">/// tasks are scheduled to run.</span>
+    <span class="doccomment">/// This results in a scheduler, I/O driver, and time driver being</span>
+    <span class="doccomment">/// initialized. The type of scheduler used depends on what feature flags</span>
+    <span class="doccomment">/// are enabled: if the `rt-threaded` feature is enabled, the [threaded</span>
+    <span class="doccomment">/// scheduler] is used, while if only the `rt-core` feature is enabled, the</span>
+    <span class="doccomment">/// [basic scheduler] is used instead.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Most users will not need to call this function directly, instead they</span>
-    <span class="doccomment">/// will use [`tokio::run`](fn.run.html).</span>
+    <span class="doccomment">/// If the threaded scheduler is selected, it will not spawn</span>
+    <span class="doccomment">/// any worker threads until it needs to, i.e. tasks are scheduled to run.</span>
+    <span class="doccomment">///</span>
+    <span class="doccomment">/// Most applications will not need to call this function directly. Instead,</span>
+    <span class="doccomment">/// they will use the  [`#[tokio::main]` attribute][main]. When more complex</span>
+    <span class="doccomment">/// configuration is necessary, the [runtime builder] may be used.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// See [module level][mod] documentation for more details.</span>
     <span class="doccomment">///</span>
@@ -751,79 +765,29 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use tokio::runtime::Runtime;</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let rt = Runtime::new()</span>
     <span class="doccomment">///     .unwrap();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Use the runtime...</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // Shutdown the runtime</span>
-    <span class="doccomment">/// rt.shutdown_now()</span>
-    <span class="doccomment">///     .wait().unwrap();</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// [mod]: index.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
-        <span class="ident">Builder</span>::<span class="ident">new</span>().<span class="ident">build</span>()
-    }
+    <span class="doccomment">/// [main]: ../../tokio_macros/attr.main.html</span>
+    <span class="doccomment">/// [threaded scheduler]: index.html#threaded-scheduler</span>
+    <span class="doccomment">/// [basic scheduler]: index.html#basic-scheduler</span>
+    <span class="doccomment">/// [runtime builder]: crate::runtime::Builder</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">new</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">io</span>::<span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="self">Self</span><span class="op">&gt;</span> {
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-threaded&quot;</span>)]</span>
+        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>().<span class="ident">threaded_scheduler</span>().<span class="ident">enable_all</span>().<span class="ident">build</span>();
 
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.1.5&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;use `reactor` instead&quot;</span>)]</span>
-    <span class="attribute">#[<span class="ident">doc</span>(<span class="ident">hidden</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Handle</span> {
-        <span class="attribute">#[<span class="ident">allow</span>(<span class="ident">deprecated</span>)]</span>
-        <span class="self">self</span>.<span class="ident">reactor</span>()
-    }
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">all</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-threaded&quot;</span>), <span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-core&quot;</span>))]</span>
+        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>().<span class="ident">basic_scheduler</span>().<span class="ident">enable_all</span>().<span class="ident">build</span>();
 
-    <span class="doccomment">/// Return a reference to the reactor handle for this runtime instance.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The returned handle reference can be cloned in order to get an owned</span>
-    <span class="doccomment">/// value of the handle. This handle can be used to initialize I/O resources</span>
-    <span class="doccomment">/// (like TCP or UDP sockets) that will not be used on the runtime.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::runtime::Runtime;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let rt = Runtime::new()</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let reactor_handle = rt.reactor().clone();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // use `reactor_handle`</span>
-    <span class="doccomment">/// ```</span>
-    <span class="attribute">#[<span class="ident">deprecated</span>(<span class="ident">since</span> <span class="op">=</span> <span class="string">&quot;0.1.11&quot;</span>, <span class="ident">note</span> <span class="op">=</span> <span class="string">&quot;there is now a reactor per worker thread&quot;</span>)]</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">reactor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Handle</span> {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">reactor</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">reactor</span>.<span class="ident">lock</span>().<span class="ident">unwrap</span>();
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">reactor</span>) <span class="op">=</span> <span class="ident">reactor</span>.<span class="ident">take</span>() {
-            <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Ok</span>(<span class="ident">background</span>) <span class="op">=</span> <span class="ident">reactor</span>.<span class="ident">background</span>() {
-                <span class="ident">background</span>.<span class="ident">forget</span>();
-            }
-        }
+        <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">not</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-core&quot;</span>))]</span>
+        <span class="kw">let</span> <span class="ident">ret</span> <span class="op">=</span> <span class="ident">Builder</span>::<span class="ident">new</span>().<span class="ident">enable_all</span>().<span class="ident">build</span>();
 
-        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">reactor_handle</span>
-    }
-
-    <span class="doccomment">/// Return a handle to the runtime&#39;s executor.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The returned handle can be used to spawn tasks that run on this runtime.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::runtime::Runtime;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let rt = Runtime::new()</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let executor_handle = rt.executor();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // use `executor_handle`</span>
-    <span class="doccomment">/// ```</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">executor</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">TaskExecutor</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>().<span class="ident">pool</span>.<span class="ident">sender</span>().<span class="ident">clone</span>();
-        <span class="ident">TaskExecutor</span> { <span class="ident">inner</span> }
+        <span class="ident">ret</span>
     }
 
     <span class="doccomment">/// Spawn a future onto the Tokio runtime.</span>
@@ -838,37 +802,40 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// ```rust</span>
-    <span class="doccomment">/// # extern crate tokio;</span>
-    <span class="doccomment">/// # extern crate futures;</span>
-    <span class="doccomment">/// # use futures::{future, Future, Stream};</span>
+    <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use tokio::runtime::Runtime;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # fn dox() {</span>
     <span class="doccomment">/// // Create the runtime</span>
-    <span class="doccomment">/// let mut rt = Runtime::new().unwrap();</span>
+    <span class="doccomment">/// let rt = Runtime::new().unwrap();</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// // Spawn a future onto the runtime</span>
-    <span class="doccomment">/// rt.spawn(future::lazy(|| {</span>
+    <span class="doccomment">/// rt.spawn(async {</span>
     <span class="doccomment">///     println!(&quot;now running on a worker thread&quot;);</span>
-    <span class="doccomment">///     Ok(())</span>
-    <span class="doccomment">/// }));</span>
+    <span class="doccomment">/// });</span>
     <span class="doccomment">/// # }</span>
-    <span class="doccomment">/// # pub fn main() {}</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Panics</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function panics if the spawn fails. Failure occurs if the executor</span>
     <span class="doccomment">/// is currently at capacity and is unable to spawn a new future.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">Self</span>
-    <span class="kw">where</span> <span class="ident">F</span>: <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> (), <span class="ident">Error</span> <span class="op">=</span> ()<span class="op">&gt;</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+    <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-core&quot;</span>)]</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">spawn</span><span class="op">&lt;</span><span class="ident">F</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">JoinHandle</span><span class="op">&lt;</span><span class="ident">F</span>::<span class="ident">Output</span><span class="op">&gt;</span>
+    <span class="kw">where</span>
+        <span class="ident">F</span>: <span class="ident">Future</span> <span class="op">+</span> <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+        <span class="ident">F</span>::<span class="ident">Output</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
     {
-        <span class="self">self</span>.<span class="ident">inner_mut</span>().<span class="ident">pool</span>.<span class="ident">sender</span>().<span class="ident">spawn</span>(<span class="ident">future</span>).<span class="ident">unwrap</span>();
-        <span class="self">self</span>
+        <span class="kw">match</span> <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">kind</span> {
+            <span class="ident">Kind</span>::<span class="ident">Shell</span>(<span class="kw">_</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="macro">panic</span><span class="macro">!</span>(<span class="string">&quot;task execution disabled&quot;</span>),
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-threaded&quot;</span>)]</span>
+            <span class="ident">Kind</span>::<span class="ident">ThreadPool</span>(<span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exec</span>.<span class="ident">spawn</span>(<span class="ident">future</span>),
+            <span class="ident">Kind</span>::<span class="ident">Basic</span>(<span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exec</span>.<span class="ident">spawn</span>(<span class="ident">future</span>),
+        }
     }
 
-    <span class="doccomment">/// Run a future to completion on the Tokio runtime.</span>
+    <span class="doccomment">/// Run a future to completion on the Tokio runtime. This is the runtime&#39;s</span>
+    <span class="doccomment">/// entry point.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// This runs the given future on the runtime, blocking until it is</span>
     <span class="doccomment">/// complete, and yielding its resolved result. Any tasks or timers which</span>
@@ -880,144 +847,45 @@
     <span class="doccomment">///</span>
     <span class="doccomment">/// This function panics if the executor is at capacity, if the provided</span>
     <span class="doccomment">/// future panics, or if called within an asynchronous execution context.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block_on</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>
-    <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">R</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">E</span><span class="op">&gt;</span>,
-        <span class="ident">R</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="ident">E</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-    {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">entered</span> <span class="op">=</span> <span class="ident">enter</span>().<span class="ident">expect</span>(<span class="string">&quot;nested block_on&quot;</span>);
-        <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">futures</span>::<span class="ident">sync</span>::<span class="ident">oneshot</span>::<span class="ident">channel</span>();
-        <span class="self">self</span>.<span class="ident">spawn</span>(<span class="ident">future</span>.<span class="ident">then</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">tx</span>.<span class="ident">send</span>(<span class="ident">r</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">unreachable</span><span class="macro">!</span>())));
-        <span class="ident">entered</span>.<span class="ident">block_on</span>(<span class="ident">rx</span>).<span class="ident">unwrap</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block_on</span><span class="op">&lt;</span><span class="ident">F</span>: <span class="ident">Future</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">F</span>::<span class="ident">Output</span> {
+        <span class="kw">let</span> <span class="ident">kind</span> <span class="op">=</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>.<span class="ident">kind</span>;
+
+        <span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">enter</span>(<span class="op">|</span><span class="op">|</span> <span class="kw">match</span> <span class="ident">kind</span> {
+            <span class="ident">Kind</span>::<span class="ident">Shell</span>(<span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exec</span>.<span class="ident">block_on</span>(<span class="ident">future</span>),
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-core&quot;</span>)]</span>
+            <span class="ident">Kind</span>::<span class="ident">Basic</span>(<span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exec</span>.<span class="ident">block_on</span>(<span class="ident">future</span>),
+            <span class="attribute">#[<span class="ident">cfg</span>(<span class="ident">feature</span> <span class="op">=</span> <span class="string">&quot;rt-threaded&quot;</span>)]</span>
+            <span class="ident">Kind</span>::<span class="ident">ThreadPool</span>(<span class="ident">exec</span>) <span class="op">=</span><span class="op">&gt;</span> <span class="ident">exec</span>.<span class="ident">block_on</span>(<span class="ident">future</span>),
+        })
     }
 
-    <span class="doccomment">/// Run a future to completion on the Tokio runtime, then wait for all</span>
-    <span class="doccomment">/// background futures to complete too.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This runs the given future on the runtime, blocking until it is</span>
-    <span class="doccomment">/// complete, waiting for background futures to complete, and yielding</span>
-    <span class="doccomment">/// its resolved result. Any tasks or timers which the future spawns</span>
-    <span class="doccomment">/// internally will be executed on the runtime and waited for completion.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This method should not be called from an asynchronous context.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Panics</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function panics if the executor is at capacity, if the provided</span>
-    <span class="doccomment">/// future panics, or if called within an asynchronous execution context.</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">block_on_all</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>(<span class="kw-2">mut</span> <span class="self">self</span>, <span class="ident">future</span>: <span class="ident">F</span>) <span class="op">-&gt;</span> <span class="prelude-ty">Result</span><span class="op">&lt;</span><span class="ident">R</span>, <span class="ident">E</span><span class="op">&gt;</span>
+    <span class="doccomment">/// Enter the runtime context</span>
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">enter</span><span class="op">&lt;</span><span class="ident">F</span>, <span class="ident">R</span><span class="op">&gt;</span>(<span class="kw-2">&amp;</span><span class="self">self</span>, <span class="ident">f</span>: <span class="ident">F</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>
     <span class="kw">where</span>
-        <span class="ident">F</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span> <span class="op">+</span> <span class="ident">Future</span><span class="op">&lt;</span><span class="ident">Item</span> <span class="op">=</span> <span class="ident">R</span>, <span class="ident">Error</span> <span class="op">=</span> <span class="ident">E</span><span class="op">&gt;</span>,
-        <span class="ident">R</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
-        <span class="ident">E</span>: <span class="ident">Send</span> <span class="op">+</span> <span class="lifetime">&#39;static</span>,
+        <span class="ident">F</span>: <span class="ident">FnOnce</span>() <span class="op">-</span><span class="op">&gt;</span> <span class="ident">R</span>,
     {
-        <span class="kw">let</span> <span class="kw-2">mut</span> <span class="ident">entered</span> <span class="op">=</span> <span class="ident">enter</span>().<span class="ident">expect</span>(<span class="string">&quot;nested block_on_all&quot;</span>);
-        <span class="kw">let</span> (<span class="ident">tx</span>, <span class="ident">rx</span>) <span class="op">=</span> <span class="ident">futures</span>::<span class="ident">sync</span>::<span class="ident">oneshot</span>::<span class="ident">channel</span>();
-        <span class="self">self</span>.<span class="ident">spawn</span>(<span class="ident">future</span>.<span class="ident">then</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">r</span><span class="op">|</span> <span class="ident">tx</span>.<span class="ident">send</span>(<span class="ident">r</span>).<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">unreachable</span><span class="macro">!</span>())));
-        <span class="kw">let</span> <span class="ident">block</span> <span class="op">=</span> <span class="ident">rx</span>
-            .<span class="ident">map_err</span>(<span class="op">|</span><span class="kw">_</span><span class="op">|</span> <span class="macro">unreachable</span><span class="macro">!</span>())
-            .<span class="ident">and_then</span>(<span class="kw">move</span> <span class="op">|</span><span class="ident">r</span><span class="op">|</span> {
-                <span class="self">self</span>.<span class="ident">shutdown_on_idle</span>()
-                    .<span class="ident">map</span>(<span class="kw">move</span> <span class="op">|</span>()<span class="op">|</span> <span class="ident">r</span>)
-            });
-        <span class="ident">entered</span>.<span class="ident">block_on</span>(<span class="ident">block</span>).<span class="ident">unwrap</span>()
+        <span class="self">self</span>.<span class="ident">handle</span>.<span class="ident">enter</span>(<span class="ident">f</span>)
     }
 
-    <span class="doccomment">/// Signals the runtime to shutdown once it becomes idle.</span>
+    <span class="doccomment">/// Return a handle to the runtime&#39;s spawner.</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a future that completes once the shutdown operation has</span>
-    <span class="doccomment">/// completed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function can be used to perform a graceful shutdown of the runtime.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// The runtime enters an idle state once **all** of the following occur.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * The thread pool has no tasks to execute, i.e., all tasks that were</span>
-    <span class="doccomment">///   spawned have completed.</span>
-    <span class="doccomment">/// * The reactor is not managing any I/O resources.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [module level][mod] documentation for more details.</span>
+    <span class="doccomment">/// The returned handle can be used to spawn tasks that run on this runtime.</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// # Examples</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// ```</span>
     <span class="doccomment">/// use tokio::runtime::Runtime;</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
     <span class="doccomment">///</span>
     <span class="doccomment">/// let rt = Runtime::new()</span>
     <span class="doccomment">///     .unwrap();</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// // Use the runtime...</span>
+    <span class="doccomment">/// let handle = rt.handle();</span>
     <span class="doccomment">///</span>
-    <span class="doccomment">/// // Shutdown the runtime</span>
-    <span class="doccomment">/// rt.shutdown_on_idle()</span>
-    <span class="doccomment">///     .wait().unwrap();</span>
+    <span class="doccomment">/// handle.spawn(async { println!(&quot;hello&quot;); });</span>
     <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [mod]: index.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shutdown_on_idle</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shutdown</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>();
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="ident">inner</span>.<span class="ident">pool</span>.<span class="ident">shutdown_on_idle</span>();
-        <span class="ident">Shutdown</span> { <span class="ident">inner</span> }
-    }
-
-    <span class="doccomment">/// Signals the runtime to shutdown immediately.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Returns a future that completes once the shutdown operation has</span>
-    <span class="doccomment">/// completed.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// This function will forcibly shutdown the runtime, causing any</span>
-    <span class="doccomment">/// in-progress work to become canceled. The shutdown steps are:</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// * Drain any scheduled work queues.</span>
-    <span class="doccomment">/// * Drop any futures that have not yet completed.</span>
-    <span class="doccomment">/// * Drop the reactor.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// Once the reactor has dropped, any outstanding I/O resources bound to</span>
-    <span class="doccomment">/// that reactor will no longer function. Calling any method on them will</span>
-    <span class="doccomment">/// result in an error.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// See [module level][mod] documentation for more details.</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// # Examples</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">/// use tokio::runtime::Runtime;</span>
-    <span class="doccomment">/// use tokio::prelude::*;</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// let rt = Runtime::new()</span>
-    <span class="doccomment">///     .unwrap();</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // Use the runtime...</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// // Shutdown the runtime</span>
-    <span class="doccomment">/// rt.shutdown_now()</span>
-    <span class="doccomment">///     .wait().unwrap();</span>
-    <span class="doccomment">/// ```</span>
-    <span class="doccomment">///</span>
-    <span class="doccomment">/// [mod]: index.html</span>
-    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">shutdown_now</span>(<span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="ident">Shutdown</span> {
-        <span class="kw">let</span> <span class="ident">inner</span> <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>().<span class="ident">unwrap</span>();
-        <span class="ident">Shutdown</span>::<span class="ident">shutdown_now</span>(<span class="ident">inner</span>)
-    }
-
-    <span class="kw">fn</span> <span class="ident">inner</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Inner</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_ref</span>().<span class="ident">unwrap</span>()
-    }
-
-    <span class="kw">fn</span> <span class="ident">inner_mut</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) <span class="op">-&gt;</span> <span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="ident">Inner</span> {
-        <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">as_mut</span>().<span class="ident">unwrap</span>()
+    <span class="kw">pub</span> <span class="kw">fn</span> <span class="ident">handle</span>(<span class="kw-2">&amp;</span><span class="self">self</span>) <span class="op">-</span><span class="op">&gt;</span> <span class="kw-2">&amp;</span><span class="ident">Handle</span> {
+        <span class="kw-2">&amp;</span><span class="self">self</span>.<span class="ident">handle</span>
     }
 }
-
-<span class="kw">impl</span> <span class="ident">Drop</span> <span class="kw">for</span> <span class="ident">Runtime</span> {
-    <span class="kw">fn</span> <span class="ident">drop</span>(<span class="kw-2">&amp;</span><span class="kw-2">mut</span> <span class="self">self</span>) {
-        <span class="kw">if</span> <span class="kw">let</span> <span class="prelude-val">Some</span>(<span class="ident">inner</span>) <span class="op">=</span> <span class="self">self</span>.<span class="ident">inner</span>.<span class="ident">take</span>() {
-            <span class="kw">let</span> <span class="ident">shutdown</span> <span class="op">=</span> <span class="ident">Shutdown</span>::<span class="ident">shutdown_now</span>(<span class="ident">inner</span>);
-            <span class="kw">let</span> <span class="kw">_</span> <span class="op">=</span> <span class="ident">shutdown</span>.<span class="ident">wait</span>();
-        }
-    }
-}
-</pre>
-</section><section id="search" class="content hidden"></section><section class="footer"></section><aside id="help" class="hidden"><div><h1 class="hidden">Help</h1><div class="shortcuts"><h2>Keyboard Shortcuts</h2><dl><dt><kbd>?</kbd></dt><dd>Show this help dialog</dd><dt><kbd>S</kbd></dt><dd>Focus the search field</dd><dt><kbd>↑</kbd></dt><dd>Move up in search results</dd><dt><kbd>↓</kbd></dt><dd>Move down in search results</dd><dt><kbd>↹</kbd></dt><dd>Switch tab</dd><dt><kbd>&#9166;</kbd></dt><dd>Go to active search result</dd><dt><kbd>+</kbd></dt><dd>Expand all sections</dd><dt><kbd>-</kbd></dt><dd>Collapse all sections</dd></dl></div><div class="infos"><h2>Search Tricks</h2><p>Prefix searches with a type followed by a colon (e.g. <code>fn:</code>) to restrict the search to a given type.</p><p>Accepted types are: <code>fn</code>, <code>mod</code>, <code>struct</code>, <code>enum</code>, <code>trait</code>, <code>type</code>, <code>macro</code>, and <code>const</code>.</p><p>Search functions by type signature (e.g. <code>vec -> usize</code> or <code>* -> vec</code>)</p><p>Search multiple things at once by splitting your query with comma (e.g. <code>str,u8</code> or <code>String,struct:Vec,test</code>)</p></div></div></aside><script>window.rootPath = "../../../";window.currentCrate = "tokio";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script defer src="../../../search-index.js"></script></body></html>
+</pre></div>
+</section><section id="search" class="content hidden"></section><section class="footer"></section><script>window.rootPath = "../../../";window.currentCrate = "tokio";</script><script src="../../../aliases.js"></script><script src="../../../main.js"></script><script src="../../../source-script.js"></script><script src="../../../source-files.js"></script><script defer src="../../../search-index.js"></script></body></html>

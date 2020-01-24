@@ -6,5 +6,4 @@ implementors["openssl"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

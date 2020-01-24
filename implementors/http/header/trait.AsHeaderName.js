@@ -6,5 +6,4 @@ implementors["http"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

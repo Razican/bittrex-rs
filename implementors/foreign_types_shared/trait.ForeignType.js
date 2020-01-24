@@ -6,5 +6,4 @@ implementors["openssl"] = [{text:"impl <a class=\"trait\" href=\"foreign_types_s
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()

@@ -6,5 +6,4 @@ implementors["indexmap"] = [];
             } else {
                 window.pending_implementors = implementors;
             }
-        
-})()
+        })()
