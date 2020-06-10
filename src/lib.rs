@@ -103,7 +103,7 @@ impl Client {
     /// **Note: it will panic if not logged in.**
     fn hash_uri(&self, url: &Url) -> Result<String> {
         use hex::ToHex;
-        use hmac::{Hmac, Mac};
+        use hmac::{Hmac, Mac, NewMac};
         use sha2::Sha512;
 
         let api_secret = self
@@ -112,9 +112,9 @@ impl Client {
             .expect("the client was not logged in");
         let mut hmac = Hmac::<Sha512>::new_varkey(api_secret.as_bytes())
             .map_err(|_| anyhow!("invalid key length"))?;
-        hmac.input(url.as_str().as_ref());
+        hmac.update(url.as_str().as_bytes());
 
-        Ok(hmac.result().code().as_slice().encode_hex())
+        Ok(hmac.finalize().into_bytes().encode_hex())
     }
 }
 
