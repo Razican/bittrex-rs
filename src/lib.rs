@@ -26,7 +26,7 @@
     nonstandard_style,
     //warnings
 )]
-#![allow(clippy::must_use_candidate)]
+#![allow(clippy::must_use_candidate, clippy::missing_errors_doc)]
 
 mod private;
 mod public;
@@ -35,35 +35,19 @@ pub mod types;
 pub use crate::public::OrderBookType;
 use anyhow::{anyhow, bail, Result};
 use chrono::Utc;
-use once_cell::sync::Lazy;
-use reqwest::{
-    header::{HeaderMap, HeaderValue},
-    Url,
-};
 use serde::Deserialize;
+use ureq::Request;
 
 /// API URL.
-static API_URL: Lazy<Url> = Lazy::new(|| Url::parse("https://bittrex.com/api/v1.1/").unwrap());
+static API_URL: &str = "https://bittrex.com/api/v1.1/";
 
 /// Bittrex API client.
-#[derive(Debug)]
+#[derive(Debug, Default, Clone)]
 pub struct Client {
-    /// Inner reqwest client.
-    inner: reqwest::blocking::Client,
     /// API key.
     api_key: Option<String>,
     /// API secret.
     api_secret: Option<String>,
-}
-
-impl Default for Client {
-    fn default() -> Self {
-        Self {
-            inner: reqwest::blocking::Client::new(),
-            api_key: None,
-            api_secret: None,
-        }
-    }
 }
 
 impl Client {
@@ -79,31 +63,31 @@ impl Client {
     /// Appends the login information to the query string.
     ///
     /// **Note: it will panic if not logged in.**
-    fn append_login(&self, url: &mut Url) {
-        let api_key = self.api_key.as_ref().unwrap();
+    fn append_login(&self, req: &mut Request) {
+        let api_key = self.api_key.as_ref().expect("no API key provided");
         let nonce = Utc::now().timestamp();
-        let _ = url
-            .query_pairs_mut()
-            .append_pair("apikey", api_key)
-            .append_pair("nonce", &format!("{}", nonce));
+        let _ = req
+            .query("apikey", api_key)
+            .query("nonce", &nonce.to_string());
     }
 
     /// Gets the headers for the given URL.
     ///
     /// **Note: it will panic if not logged in.**
-    fn get_headers(&self, url: &Url) -> Result<HeaderMap> {
-        let mut headers = HeaderMap::new();
-        let hash = self.hash_uri(url);
-        let _ = headers.insert("apisign", HeaderValue::from_str(&hash?)?);
-        Ok(headers)
+    fn set_headers(&self, req: &mut Request) -> Result<()> {
+        let url = req.get_url().to_string() + &req.get_query().unwrap();
+        let hash = self.hash_uri(&url)?;
+        let _ = req.set("apisign", &hash);
+
+        Ok(())
     }
 
     /// Hash the given URI with the logged in API secret.
     ///
     /// **Note: it will panic if not logged in.**
-    fn hash_uri(&self, url: &Url) -> Result<String> {
+    fn hash_uri(&self, url: &str) -> Result<String> {
         use hex::ToHex;
-        use hmac::{Hmac, Mac};
+        use hmac::{Hmac, Mac, NewMac};
         use sha2::Sha512;
 
         let api_secret = self
@@ -112,9 +96,9 @@ impl Client {
             .expect("the client was not logged in");
         let mut hmac = Hmac::<Sha512>::new_varkey(api_secret.as_bytes())
             .map_err(|_| anyhow!("invalid key length"))?;
-        hmac.input(url.as_str().as_ref());
+        hmac.update(url.as_bytes());
 
-        Ok(hmac.result().code().as_slice().encode_hex())
+        Ok(hmac.finalize().into_bytes().encode_hex())
     }
 }
 

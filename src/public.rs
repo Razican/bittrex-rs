@@ -1,65 +1,67 @@
 //! Public API methods.
 
-use crate::{types::*, ApiResult, Client, API_URL};
+use crate::{
+    types::{CurrencyInfo, MarketInfo, MarketSummary, Order, OrderBook, TickerInfo},
+    ApiResult, Client, API_URL,
+};
 use anyhow::{anyhow, Result};
 use once_cell::sync::Lazy;
-use reqwest::Url;
 
 /// Public API methods.
 impl Client {
     /// Used to get the open and available trading markets at Bittrex along with other meta data.
-    pub fn get_markets(&self) -> Result<Vec<MarketInfo>> {
+    pub fn get_markets() -> Result<Vec<MarketInfo>> {
         /// URL for the `get_markets` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getmarkets").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getmarkets");
 
-        let response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Vec<MarketInfo>> = response.json()?;
+        let response = ureq::get(&URL).call();
+        let result: ApiResult<Vec<MarketInfo>> = response.into_json_deserialize()?;
         result.into_result()
     }
 
     /// Used to get all supported currencies at Bittrex along with other meta data.
-    pub fn get_currencies(&self) -> Result<Vec<CurrencyInfo>> {
+    pub fn get_currencies() -> Result<Vec<CurrencyInfo>> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getcurrencies").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getcurrencies");
 
-        let response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Vec<CurrencyInfo>> = response.json()?;
+        let response = ureq::get(&URL).call();
+        let result: ApiResult<Vec<CurrencyInfo>> = response.into_json_deserialize()?;
         result.into_result()
     }
 
     /// Used to get the current tick values for a market.
-    pub fn get_ticker<S: AsRef<str>>(&self, market: S) -> Result<TickerInfo> {
+    pub fn get_ticker<S: AsRef<str>>(market: S) -> Result<TickerInfo> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getticker").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getticker");
 
-        let mut url = URL.clone();
-        let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
+        let mut req = ureq::get(&URL);
+        let _ = req.query("market", market.as_ref());
 
-        let response = self.inner.get(url).send()?;
-        let result: ApiResult<TickerInfo> = response.json()?;
+        let response = req.call();
+        let result: ApiResult<TickerInfo> = response.into_json_deserialize()?;
         result.into_result()
     }
 
     /// Used to get the last 24 hour summary of all active exchanges.
-    pub fn get_market_summaries(&self) -> Result<Vec<MarketSummary>> {
+    pub fn get_market_summaries() -> Result<Vec<MarketSummary>> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getmarketsummaries").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getmarketsummaries");
 
-        let response = self.inner.get(URL.clone()).send()?;
-        let result: ApiResult<Vec<MarketSummary>> = response.json()?;
+        let response = ureq::get(&URL).call();
+        let result: ApiResult<Vec<MarketSummary>> = response.into_json_deserialize()?;
         result.into_result()
     }
 
     /// Used to get the last 24 hour summary of the given market.
-    pub fn get_market_summary<S: AsRef<str>>(&self, market: S) -> Result<MarketSummary> {
+    pub fn get_market_summary<S: AsRef<str>>(market: S) -> Result<MarketSummary> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getmarketsummary").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getmarketsummary");
 
-        let mut url = URL.clone();
-        let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
+        let mut req = ureq::get(&URL);
+        let _ = req.query("market", market.as_ref());
 
-        let response = self.inner.get(url).send()?;
-        let result: ApiResult<Vec<MarketSummary>> = response.json()?;
+        let response = req.call();
+        let result: ApiResult<Vec<MarketSummary>> = response.into_json_deserialize()?;
         result.into_result().and_then(|arr| {
             arr.into_iter()
                 .next()
@@ -71,51 +73,49 @@ impl Client {
     ///
     /// **Panics if the depth is bigger than 50.**
     pub fn get_order_book<S: AsRef<str>>(
-        &self,
         market: S,
         order_type: OrderBookType,
         depth: u8,
     ) -> Result<OrderBook> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getorderbook").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getorderbook");
 
         assert!(depth <= 50, "order book depth must be between 0 and 50");
 
-        let mut url = URL.clone();
-        let _ = url
-            .query_pairs_mut()
-            .append_pair("market", market.as_ref())
-            .append_pair("type", order_type.as_str())
-            .append_pair("depth", &format!("{}", depth));
+        let mut req = ureq::get(&URL);
+        let _ = req
+            .query("market", market.as_ref())
+            .query("type", order_type.as_str())
+            .query("depth", &depth.to_string());
 
-        let response = self.inner.get(url).send()?;
+        let response = req.call();
 
         match order_type {
             OrderBookType::Buy => {
-                let result: ApiResult<Box<[Order]>> = response.json()?;
+                let result: ApiResult<Box<[Order]>> = response.into_json_deserialize()?;
                 Ok(OrderBook::new(result.into_result()?, Vec::new()))
             }
             OrderBookType::Sell => {
-                let result: ApiResult<Box<[Order]>> = response.json()?;
+                let result: ApiResult<Box<[Order]>> = response.into_json_deserialize()?;
                 Ok(OrderBook::new(Vec::new(), result.into_result()?))
             }
             OrderBookType::Both => {
-                let result: ApiResult<OrderBook> = response.json()?;
+                let result: ApiResult<OrderBook> = response.into_json_deserialize()?;
                 result.into_result()
             }
         }
     }
 
     /// Used to retrieve the latest trades that have occurred for a specific market.
-    pub fn get_market_history<S: AsRef<str>>(&self, market: S) -> Result<MarketSummary> {
+    pub fn get_market_history<S: AsRef<str>>(market: S) -> Result<MarketSummary> {
         /// URL for the `get_currencies` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("public/getmarketsummary").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/public/getmarketsummary");
 
-        let mut url = URL.clone();
-        let _ = url.query_pairs_mut().append_pair("market", market.as_ref());
+        let mut req = ureq::get(&URL);
+        let _ = req.query("market", market.as_ref());
 
-        let response = self.inner.get(url).send()?;
-        let result: ApiResult<Vec<MarketSummary>> = response.json()?;
+        let response = req.call();
+        let result: ApiResult<Vec<MarketSummary>> = response.into_json_deserialize()?;
         result.into_result().and_then(|arr| {
             arr.into_iter()
                 .next()
