@@ -2,10 +2,9 @@
 //!
 //! **Note: All this methods will panic if the client is not logged in.**
 
-use crate::{types::*, ApiResult, Client, API_URL};
+use crate::{types::BalanceInfo, ApiResult, Client, API_URL};
 use anyhow::Result;
 use once_cell::sync::Lazy;
-use reqwest::Url;
 
 /// Private API methods.
 ///
@@ -16,14 +15,14 @@ impl Client {
     /// **Note: it will panic if not logged in.**
     pub fn get_balances(&self) -> Result<Vec<BalanceInfo>> {
         /// URL for the `get_balances` endpoint.
-        static URL: Lazy<Url> = Lazy::new(|| API_URL.join("account/getbalances").unwrap());
+        static URL: Lazy<String> = Lazy::new(|| API_URL.to_string() + "/account/getbalances");
 
-        let mut url = URL.clone();
-        self.append_login(&mut url);
+        let mut req = ureq::get(&URL);
+        self.append_login(&mut req);
+        self.set_headers(&mut req)?;
 
-        let headers = self.get_headers(&url)?;
-        let response = self.inner.get(url).headers(headers).send()?;
-        let result: ApiResult<Vec<BalanceInfo>> = response.json()?;
+        let response = req.call();
+        let result: ApiResult<Vec<BalanceInfo>> = response.into_json_deserialize()?;
         result.into_result()
     }
 }

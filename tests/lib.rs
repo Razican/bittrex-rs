@@ -27,22 +27,20 @@
 )]
 
 use bittrex::Client;
-use chrono::*;
+use chrono::{Datelike, Timelike};
 use dotenv::dotenv;
 use std::env;
 
 /// Tests getting all the markets.
 #[test]
 fn it_get_markets() {
-    let client = Client::default();
-    client.get_markets().unwrap();
+    Client::get_markets().unwrap();
 }
 
 /// Tests that the date/time parsing from the API is done properly.
 #[test]
 fn it_date_time_parsing() {
-    let client = Client::default();
-    let markets = client.get_markets().unwrap();
+    let markets = Client::get_markets().unwrap();
 
     for market in markets {
         if market.market_name() == "BTC-LTC" {
@@ -76,37 +74,33 @@ fn it_date_time_parsing() {
 /// Tests getting all currencies.
 #[test]
 fn it_get_currencies() {
-    let client = Client::default();
-    client.get_currencies().unwrap();
+    Client::get_currencies().unwrap();
 }
 
 /// Tests getting the ticker information for 3 valid and 1 invalid markets.
 #[test]
 fn it_get_ticker() {
-    let client = Client::default();
-    client.get_ticker("BTC-LTC").unwrap();
-    client.get_ticker("BTC-ETH").unwrap();
-    client.get_ticker("BTC-ZEC").unwrap();
+    Client::get_ticker("BTC-LTC").unwrap();
+    Client::get_ticker("BTC-ETH").unwrap();
+    Client::get_ticker("BTC-ZEC").unwrap();
 
-    assert!(client.get_ticker("Invalid market").is_err());
+    assert!(Client::get_ticker("Invalid market").is_err());
 }
 
 /// Tests getting all the market summaries.
 #[test]
 fn it_get_market_summaries() {
-    let client = Client::default();
-    client.get_market_summaries().unwrap();
+    Client::get_market_summaries().unwrap();
 }
 
 /// Tests 3 valid and 1 invalid market summary for an expected response.
 #[test]
 fn it_get_market_summary() {
-    let client = Client::default();
-    client.get_market_summary("BTC-LTC").unwrap();
-    client.get_market_summary("BTC-ETH").unwrap();
-    client.get_market_summary("BTC-ZEC").unwrap();
+    Client::get_market_summary("BTC-LTC").unwrap();
+    Client::get_market_summary("BTC-ETH").unwrap();
+    Client::get_market_summary("BTC-ZEC").unwrap();
 
-    assert!(client.get_market_summary("Invalid market").is_err());
+    assert!(Client::get_market_summary("Invalid market").is_err());
 }
 
 /// Tests 3 valid markets and an invalid market for an expected response.
@@ -114,20 +108,11 @@ fn it_get_market_summary() {
 fn it_get_order_book() {
     use bittrex::OrderBookType;
 
-    let client = Client::default();
-    client
-        .get_order_book("BTC-LTC", OrderBookType::Buy, 20)
-        .unwrap();
-    client
-        .get_order_book("BTC-ETH", OrderBookType::Sell, 0)
-        .unwrap();
-    client
-        .get_order_book("BTC-ZEC", OrderBookType::Both, 50)
-        .unwrap();
+    Client::get_order_book("BTC-LTC", OrderBookType::Buy, 20).unwrap();
+    Client::get_order_book("BTC-ETH", OrderBookType::Sell, 0).unwrap();
+    Client::get_order_book("BTC-ZEC", OrderBookType::Both, 50).unwrap();
 
-    assert!(client
-        .get_order_book("Invalid market", OrderBookType::Both, 50)
-        .is_err());
+    assert!(Client::get_order_book("Invalid market", OrderBookType::Both, 50).is_err());
 }
 
 /// Tests an invalid order book depth, that should panic.
@@ -136,10 +121,7 @@ fn it_get_order_book() {
 fn it_get_order_book_panic() {
     use bittrex::OrderBookType;
 
-    let client = Client::default();
-    client
-        .get_order_book("BTC-LTC", OrderBookType::Both, 100)
-        .unwrap();
+    Client::get_order_book("BTC-LTC", OrderBookType::Both, 100).unwrap();
 }
 
 /// Test get balances from account.
