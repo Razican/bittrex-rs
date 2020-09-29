@@ -127,7 +127,7 @@ pub struct MarketSummary {
     open_sell_orders: Option<u32>,
     /// Tthe price of the previous day.
     #[get_copy = "pub"]
-    prev_day: f32,
+    prev_day: Option<f32>,
     /// Market creation time.
     #[get_copy = "pub"]
     created: NaiveDateTime,
